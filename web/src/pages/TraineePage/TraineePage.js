@@ -3,10 +3,14 @@ import UserLayout from 'src/layouts/UserLayout'
 const TraineePage = () => {
   return (
     <UserLayout>
-      <h1>TraineePage</h1>
-      <p>
-        Find me in <tt>./web/src/pages/TraineePage/TraineePage.js</tt>
-      </p>
+      <div className="workoutGraphContatiner ">
+        <div className="workoutGraph">Workout Graph Goes here</div>
+      </div>
+      <div className="exerciseProgressContatiner ">
+        <div className="exerciseProgress">
+          Exercise Progress Graph Goes here
+        </div>
+      </div>
     </UserLayout>
   )
 }
