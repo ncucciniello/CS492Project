@@ -4,7 +4,7 @@ const HomePage = () => {
   return (
     <div>
       <header className="home-header">
-        <div>Logo goes here</div>
+        <div className="logo">Logo goes here</div>
         <h1>
           <Link to={routes.home()}>TrainerTracker</Link>
         </h1>

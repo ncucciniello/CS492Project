@@ -1,12 +1,7 @@
-* {
-  margin: 0 auto;
-  /*border-spacing: border-box;*/
-}
-
 .home-header {
   border-bottom: 2px solid black;
 }
-.home-header div {
+.home-header .logo {
   margin: 5px 0 0 5px;
   height: 50px;
   width: 50px ;
@@ -17,6 +12,28 @@
 .home-header h1, a {
   margin-left: 5px;
   text-decoration: none;
+  display: inline-block;
+}
+
+.user-info {
+  float: right;
+  width: 150px;
+}
+
+.info-block {
+  width: 50%;
+  display: inline-block;
+}
+
+.user-info p {
+  display: block;
+  margin: 0 0 10px 0;
+}
+
+.user-info .user-img {
+  background-color: pink;
+  height: 60px;
+  width: 50%;
   display: inline-block;
 }
 
@@ -36,7 +53,6 @@
 
 .info {
   padding: 80px 20vw;
-  border-bottom: 2px solid black;
 }
 
 .info p {
@@ -44,6 +60,7 @@
 }
 
 footer {
+  border-top: 2px solid black;
   padding: 10px 0;
   text-align: center;
 }
