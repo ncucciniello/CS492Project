@@ -60,12 +60,16 @@
   margin: 15px 0;
 }
 
+.clientListHeader {
+  width: 600px;
+  margin: 5px auto;
+}
 
 .clientList {
   width: 600px;
   height: 300px;
   border: 2px solid black;
-  margin: 50px auto;
+  margin: 0 auto;
   overflow: scroll;
 }
 
@@ -81,6 +85,35 @@
   height: 300px;
   border: 2px solid black;
   margin: 50px auto;
+}
+
+.workoutGraphHeader {
+  width: 74%;
+  /* height: 200px; */
+  /* border: 2px solid purple; */
+  display: inline-block;
+  text-align: center;
+  /* margin: 50px auto; */
+}
+
+.workoutGraphHeader button, h3 {
+  display: inline-block;
+}
+
+.workoutGraph {
+  width: 74%;
+  height: 75%;
+  border: 2px solid black;
+  display: inline-block;
+  /* margin: 50px auto; */
+}
+
+.workoutGraphSidebar {
+  width: 24%;
+  height: 100%;
+  /* border: 2px solid green; */
+  float: right;
+  /* margin: 50px auto; */
 }
 
 .exerciseProgressContatiner {
