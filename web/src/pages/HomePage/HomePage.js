@@ -11,6 +11,14 @@ const HomePage = () => {
       </header>
 
       <main>
+        <ul>
+          <li>
+            <Link to={routes.trainer()}>Trainer Page</Link>
+          </li>
+          <li>
+            <Link to={routes.trainee()}>Trainee Page</Link>
+          </li>
+        </ul>
         <div className="banner">
           <h1>Welcome to</h1>
           <h1>TrainerTracker</h1>
