@@ -1,21 +1,22 @@
+import NewClient from 'src/components/NewClient/NewClient'
 import UserLayout from 'src/layouts/UserLayout'
-// import ClientListCell from 'src/components/ClientListCell'
+import ClientListCell from 'src/components/ClientListCell'
+import { useState } from 'react'
 
 const TrainerPage = () => {
+  const [isVisible, setVisible] = useState(false)
+
+  const openTraineeList = () => {
+    setVisible(true)
+  }
+
   return (
     <UserLayout>
       <div className="clientListHeader">
         <h3>Client List</h3>
-        <button>Add Client +</button>
-      </div>
-      <div className="clientList">
-        <div className="clientListItem">Client 1</div>
-        <div className="clientListItem">Client 2</div>
-        <div className="clientListItem">Client 3</div>
-        <div className="clientListItem">Client 4</div>
-        <div className="clientListItem">Client 5</div>
-        <div className="clientListItem">Client 6</div>
-        <div className="clientListItem">Client 7</div>
+        <button onClick={openTraineeList}>Add Client +</button>
+        {isVisible && <NewClient setVisible={setVisible} />}
+        <ClientListCell trainerId={1} />
       </div>
       <div className="workoutGraphContatiner ">
         <div className="workoutGraphHeader">
@@ -34,7 +35,6 @@ const TrainerPage = () => {
           Exercise Progress Graph Goes here
         </div>
       </div>
-      {/* <ClientListCell /> */}
     </UserLayout>
   )
 }

@@ -70,12 +70,11 @@
   height: 300px;
   border: 2px solid black;
   margin: 0 auto;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .clientListItem {
-  width: 100%;
-  height: 80px;
+  /* width: 100%; */
   border-bottom: 1px solid black;
   margin: 0 auto;
 }
