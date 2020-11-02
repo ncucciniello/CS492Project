@@ -18,7 +18,7 @@ const ClientListItem = (props) => {
         input: { trainer: null },
       },
     })
-    props.refetch()
+    props.refreshClients()
   }
 
   return (

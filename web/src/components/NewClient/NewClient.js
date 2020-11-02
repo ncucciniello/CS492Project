@@ -36,6 +36,7 @@ const NewClient = (props) => {
       variables: { id: parseInt(selection.traineeId), input: { trainer: 1 } },
     })
     props.setVisibility(false)
+    props.refreshClients()
   }
 
   return (
