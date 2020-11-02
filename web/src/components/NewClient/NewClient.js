@@ -27,8 +27,6 @@ const NewClient = (props) => {
     fetchPolicy: 'network-only',
   })
 
-  console.log(data)
-
   const [updateUser] = useMutation(UPDATE_TRAINEE)
 
   const formMethods = useForm()
@@ -37,7 +35,7 @@ const NewClient = (props) => {
     updateUser({
       variables: { id: parseInt(selection.traineeId), input: { trainer: 1 } },
     })
-    props.setVisible(false)
+    props.setVisibility(false)
   }
 
   return (

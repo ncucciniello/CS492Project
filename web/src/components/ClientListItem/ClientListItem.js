@@ -8,7 +8,7 @@ const UPDATE_TRAINEE = gql`
   }
 `
 
-const ClientListItem = ({ user }) => {
+const ClientListItem = (props) => {
   const [updateUser] = useMutation(UPDATE_TRAINEE)
 
   const onSubmit = (selection) => {
@@ -18,12 +18,13 @@ const ClientListItem = ({ user }) => {
         input: { trainer: null },
       },
     })
+    props.refetch()
   }
 
   return (
     <div className="clientListItem">
-      <h2>{user.name}</h2>
-      <button onClick={() => onSubmit(user.id)}>Remove</button>
+      <h2>{props.user.name}</h2>
+      <button onClick={() => onSubmit(props.user.id)}>Remove</button>
     </div>
   )
 }

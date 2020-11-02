@@ -9,6 +9,10 @@ export const QUERY = gql`
     }
   }
 `
+// export const beforeQuery = (props) => {
+//   return { variables: props, fetchPolicy: 'cache-and-network' }
+// }
+
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
@@ -21,6 +25,7 @@ export const Success = ({ clients }) => {
       {clients.map((user) => (
         <ClientListItem key={user.id} user={user} />
       ))}
+      {/* <button onClick={() => refetch()}>ReRender</button> */}
     </div>
   )
 }
