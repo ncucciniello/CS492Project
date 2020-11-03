@@ -50,6 +50,8 @@ const NewClient = (props) => {
         <SelectField name="traineeId">
           {loading ? (
             <option>Loading ...</option>
+          ) : data.unassignedTrainees.length == 0 ? (
+            <option>There are no unassigned trainees</option>
           ) : (
             data.unassignedTrainees.map((trainee) => (
               <option key={trainee.id} value={trainee.id}>
