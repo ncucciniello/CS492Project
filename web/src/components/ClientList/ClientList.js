@@ -34,6 +34,11 @@ const ClientList = () => {
       <div className="clientList">
         {loading ? (
           <div>Loading...</div>
+        ) : data.clients.length == 0 ? (
+          <div>
+            <h3>No clients assigned</h3>
+            <h4>Please click add client to assign a client</h4>
+          </div>
         ) : (
           data.clients.map((client) => (
             <ClientListItem
