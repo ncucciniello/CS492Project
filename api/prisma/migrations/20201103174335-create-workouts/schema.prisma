@@ -2,7 +2,7 @@ datasource DS {
   // optionally set multiple providers
   // example: provider = ["sqlite", "postgresql"]
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -24,24 +24,6 @@ model User {
 model Workout {
   id     Int      @id @default(autoincrement())
   userId Int
-  date   DateTime @default(now())
+  date   DateTime
   User   User     @relation(fields: [userId], references: [id])
-}
-
-model Exercise {
-  id           Int      @id @default(autoincrement())
-  workoutId    Int
-  weight       Int
-  repsAssigned Int
-  repsComplete Int?
-  setsAssigned Int
-  setsComplete Int?
-  exerciseType Int
-  Workout      Workout      @relation(fields: [workoutId], references: [id])
-  ExerciseType ExerciseType @relation(fields: [exerciseType], references: [id])
-}
-
-model ExerciseType {
-  id    Int      @id @default(autoincrement())
-  name  String
 }

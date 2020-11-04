@@ -30,14 +30,6 @@ export const trainees = () => {
   })
 }
 
-export const trainers = () => {
-  return db.user.findMany({
-    where: {
-      type: 'Trainer',
-    },
-  })
-}
-
 export const createUser = ({ input }) => {
   return db.user.create({ data: input })
 }

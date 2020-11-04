@@ -79,14 +79,14 @@
   margin: 0 auto;
 }
 
-.workoutGraphContatiner {
+.workoutContatiner {
   width: 600px;
   height: 300px;
   border: 2px solid black;
   margin: 50px auto;
 }
 
-.workoutGraphHeader {
+.workoutHeader {
   width: 74%;
   /* height: 200px; */
   /* border: 2px solid purple; */
@@ -95,7 +95,7 @@
   /* margin: 50px auto; */
 }
 
-.workoutGraphHeader button, h3 {
+.workoutHeader button, h3 {
   display: inline-block;
 }
 
@@ -107,7 +107,7 @@
   /* margin: 50px auto; */
 }
 
-.workoutGraphSidebar {
+.workoutSidebar {
   width: 24%;
   height: 100%;
   /* border: 2px solid green; */

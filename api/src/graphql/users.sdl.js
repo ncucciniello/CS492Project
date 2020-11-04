@@ -12,7 +12,6 @@ export const schema = gql`
     clients(trainerId: Int!): [User!]!
     unassignedTrainees: [User!]!
     trainees: [User!]!
-    trainers: [User!]!
   }
 
   input CreateUserInput {
