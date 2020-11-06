@@ -33,7 +33,7 @@ const NewClient = (props) => {
 
   const onSubmit = (selection) => {
     updateUser({
-      variables: { id: parseInt(selection.traineeId), input: { trainer: 1 } },
+      variables: { id: parseInt(selection.traineeId), input: { trainer: 2 } },
     })
     props.setVisibility(false)
     props.refreshClients()

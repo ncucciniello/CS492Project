@@ -21,7 +21,7 @@ const ClientList = () => {
   }
 
   const { refetch, loading, data } = useQuery(GET_CLIENTS, {
-    variables: { trainerId: 1 },
+    variables: { trainerId: 2 },
   })
 
   return (

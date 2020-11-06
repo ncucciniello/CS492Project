@@ -2,17 +2,19 @@ export const schema = gql`
   type Workout {
     id: Int!
     userId: Int!
-    date: DateTime!
-    User: User!
+    date: DateTime
+    user: User!
+    exercises: [Exercise]
   }
 
   type Query {
     workouts: [Workout!]!
+    userWorkouts(userNum: Int!): [Workout!]!
   }
 
   input CreateWorkoutInput {
     userId: Int!
-    date: DateTime!
+    date: DateTime
   }
 
   input UpdateWorkoutInput {
