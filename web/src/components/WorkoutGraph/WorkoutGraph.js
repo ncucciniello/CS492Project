@@ -1,8 +1,16 @@
-const WorkoutGraph = () => {
+const WorkoutGraph = (props) => {
+  const workout = props.data.userWorkouts[0]
   return (
-    <div>
-      <h2>{'WorkoutGraph'}</h2>
-      <p>{'Find me in ./web/src/components/WorkoutGraph/WorkoutGraph.js'}</p>
+    <div className="workoutGraph">
+      <h3>Workout on: {props.data.userWorkouts[0].date}</h3>
+      {workout.exercises.map((exercise) => (
+        <div key={exercise.id}>
+          <h4>{exercise.exerciseType.name}</h4>
+          <p>Weight: {exercise.weight}</p>
+          <p>Reps: {exercise.repsAssigned}</p>
+          <p>Sets: {exercise.setsAssigned}</p>
+        </div>
+      ))}
     </div>
   )
 }

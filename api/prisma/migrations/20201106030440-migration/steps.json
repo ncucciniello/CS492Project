@@ -1,0 +1,19 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "workouts",
+      "type": "Workout",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ExerciseType",
+      "field": "exercises",
+      "type": "Exercise",
+      "arity": "List"
+    }
+  ]
+}

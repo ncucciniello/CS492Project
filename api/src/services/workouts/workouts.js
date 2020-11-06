@@ -4,10 +4,14 @@ export const workouts = () => {
   return db.workout.findMany()
 }
 
-export const userWorkouts = ({ userNum }) => {
+export const userWorkouts = ({ input }) => {
   return db.workout.findMany({
     where: {
-      userId: userNum,
+      userId: input.userId,
+      date: {
+        gt: new Date(input.date),
+        lt: (new Date(input.date) + 1).toISOString,
+      },
     },
   })
 }

@@ -7,9 +7,14 @@ export const schema = gql`
     exercises: [Exercise]
   }
 
+  input SearchWorkoutInput {
+    userId: Int!
+    date: String!
+  }
+
   type Query {
     workouts: [Workout!]!
-    userWorkouts(userNum: Int!): [Workout!]!
+    userWorkouts(input: SearchWorkoutInput!): [Workout!]!
   }
 
   input CreateWorkoutInput {

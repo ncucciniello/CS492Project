@@ -104,6 +104,7 @@
   height: 75%;
   border: 2px solid black;
   display: inline-block;
+  overflow-y: scroll;
   /* margin: 50px auto; */
 }
 
