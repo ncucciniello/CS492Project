@@ -9,8 +9,8 @@ export const userWorkouts = ({ input }) => {
     where: {
       userId: input.userId,
       date: {
-        gt: new Date(input.date),
-        lt: (new Date(input.date) + 1).toISOString,
+        gt: new Date(new Date(input.date)).toISOString(),
+        lt: new Date(+new Date(input.date) + 86400000).toISOString(),
       },
     },
   })

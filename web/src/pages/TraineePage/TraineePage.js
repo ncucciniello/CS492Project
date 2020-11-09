@@ -1,20 +1,10 @@
 import UserLayout from 'src/layouts/UserLayout'
+import Workout from 'src/components/Workout'
 
 const TraineePage = () => {
   return (
     <UserLayout>
-      <div className="workoutGraphContatiner ">
-        <div className="workoutGraphHeader">
-          <button>Previous Day</button>
-          <h3>Todays Date</h3>
-          <button>Next Day</button>
-        </div>
-        <div className="workoutGraph">Workout Graph Goes here</div>
-        <div className="workoutGraphSidebar">
-          <button>Log Workout</button>
-          <button>Edit Log</button>
-        </div>
-      </div>
+      <Workout userSelected={1} />
       <div className="exerciseProgressContatiner ">
         <div className="exerciseProgress">
           Exercise Progress Graph Goes here

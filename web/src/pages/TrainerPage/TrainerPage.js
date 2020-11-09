@@ -6,7 +6,7 @@ const TrainerPage = () => {
   return (
     <UserLayout>
       <ClientList />
-      <Workout />
+      <Workout userSelected={1} />
       <div className="exerciseProgressContatiner ">
         <div className="exerciseProgress">
           Exercise Progress Graph Goes here

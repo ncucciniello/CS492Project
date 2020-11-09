@@ -1,8 +1,9 @@
 const WorkoutGraph = (props) => {
   const workout = props.data.userWorkouts[0]
+
   return (
     <div className="workoutGraph">
-      <h3>Workout on: {props.data.userWorkouts[0].date}</h3>
+      <h3>Workout on: {workout.date.split('T', 1)[0]}</h3>
       {workout.exercises.map((exercise) => (
         <div key={exercise.id}>
           <h4>{exercise.exerciseType.name}</h4>
