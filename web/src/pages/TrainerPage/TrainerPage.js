@@ -7,11 +7,11 @@ const TrainerPage = () => {
     <UserLayout>
       <ClientList />
       <Workout userSelected={1} />
-      <div className="exerciseProgressContatiner ">
+      {/* <div className="exerciseProgressContatiner ">
         <div className="exerciseProgress">
           Exercise Progress Graph Goes here
         </div>
-      </div>
+      </div> */}
     </UserLayout>
   )
 }

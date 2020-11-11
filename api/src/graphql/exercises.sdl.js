@@ -24,6 +24,17 @@ export const schema = gql`
     exerciseType: Int!
   }
 
+  input CreateNewExerciseInput {
+    weight: String!
+    repsAssigned: String!
+    setsAssigned: String!
+    exerciseType: CreateExerciseTypeIdInput!
+  }
+
+  input CreateExerciseTypeIdInput {
+    id: String!
+  }
+
   input UpdateExerciseInput {
     workoutId: Int
     repsComplete: Int

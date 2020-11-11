@@ -8,13 +8,6 @@ export const exercises = () => {
   })
 }
 
-export const Exercise = {
-  Workout: (_obj, { root }) =>
-    db.exercise.findOne({ where: { id: root.id } }).Workout(),
-  ExerciseType: (_obj, { root }) =>
-    db.exercise.findOne({ where: { id: root.id } }).ExerciseType(),
-}
-
 export const createExercise = ({ input }) => {
   return db.exercise.create({
     data: {
@@ -33,4 +26,11 @@ export const createExercise = ({ input }) => {
       },
     },
   })
+}
+
+export const Exercise = {
+  Workout: (_obj, { root }) =>
+    db.exercise.findOne({ where: { id: root.id } }).Workout(),
+  ExerciseType: (_obj, { root }) =>
+    db.exercise.findOne({ where: { id: root.id } }).ExerciseType(),
 }

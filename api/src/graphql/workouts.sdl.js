@@ -22,6 +22,12 @@ export const schema = gql`
     date: DateTime
   }
 
+  input CreateFullWorkoutInput {
+    userId: Int!
+    date: DateTime
+    exercises: [CreateNewExerciseInput]
+  }
+
   input UpdateWorkoutInput {
     userId: Int
     date: DateTime
@@ -29,5 +35,6 @@ export const schema = gql`
 
   type Mutation {
     createWorkout(input: CreateWorkoutInput!): Workout
+    createFullWorkout(input: CreateFullWorkoutInput!): Workout
   }
 `

@@ -1,4 +1,5 @@
 import WorkoutGraph from 'src/components/WorkoutGraph'
+import NewWorkout from 'src/components/NewWorkout'
 import { useQuery } from '@redwoodjs/web'
 import { useState } from 'react'
 
@@ -25,9 +26,14 @@ export const GET_WORKOUT = gql`
 `
 
 const Workout = (props) => {
+  const [isVisible, setVisibility] = useState(false)
   const [dateSelected, setDateSelected] = useState(new Date())
 
-  const { loading, data } = useQuery(GET_WORKOUT, {
+  const openWorkoutForm = () => {
+    setVisibility(true)
+  }
+
+  const { loading, data, refetch } = useQuery(GET_WORKOUT, {
     variables: {
       input: {
         userId: props.userSelected,
@@ -65,9 +71,16 @@ const Workout = (props) => {
         <WorkoutGraph data={data} />
       )}
       <div className="workoutSidebar">
-        <button>Add Workout</button>
-        <button>Edit Workout</button>
+        <button onClick={openWorkoutForm}>Add Workout</button>
+        <button disabled>Edit Workout</button>
       </div>
+      {isVisible && (
+        <NewWorkout
+          reRender={refetch}
+          userSelected={props.userSelected}
+          setVisibility={setVisibility}
+        />
+      )}
     </div>
   )
 }

@@ -81,7 +81,7 @@
 
 .workoutContatiner {
   width: 600px;
-  height: 300px;
+  height: 600px;
   border: 2px solid black;
   margin: 50px auto;
 }
@@ -101,7 +101,7 @@
 
 .workoutGraph {
   width: 74%;
-  height: 75%;
+  height: 50%;
   border: 2px solid black;
   display: inline-block;
   overflow-y: scroll;
@@ -116,6 +116,14 @@
   /* margin: 50px auto; */
 }
 
+.newWorkoutModal {
+  border: 1px solid black;
+}
+
+.workoutInput {
+  width: 50px;
+}
+
 .exerciseProgressContatiner {
   width: 600px;
   height: 300px;
@@ -127,4 +135,10 @@ footer {
   border-top: 2px solid black;
   padding: 10px 0;
   text-align: center;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
+  width: 50px;
 }

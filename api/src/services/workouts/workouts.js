@@ -9,8 +9,8 @@ export const userWorkouts = ({ input }) => {
     where: {
       userId: input.userId,
       date: {
-        gt: new Date(new Date(input.date)).toISOString(),
-        lt: new Date(+new Date(input.date) + 86400000).toISOString(),
+        gte: new Date(new Date(input.date)).toISOString(),
+        lte: new Date(+new Date(input.date) + 86400000).toISOString(),
       },
     },
   })
@@ -25,6 +25,31 @@ export const createWorkout = ({ input }) => {
         },
       },
       date: input.date,
+    },
+  })
+}
+
+export const createFullWorkout = ({ input }) => {
+  return db.workout.create({
+    data: {
+      user: {
+        connect: {
+          id: input.userId,
+        },
+      },
+      date: input.date,
+      exercises: {
+        create: input.exercises.map((exercise) => ({
+          weight: parseInt(exercise.weight),
+          repsAssigned: parseInt(exercise.repsAssigned),
+          setsAssigned: parseInt(exercise.setsAssigned),
+          exerciseType: {
+            connect: {
+              id: parseInt(exercise.exerciseType.id),
+            },
+          },
+        })),
+      },
     },
   })
 }
