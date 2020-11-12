@@ -20,9 +20,38 @@ const ClientList = () => {
     setVisibility(true)
   }
 
-  const { refetch, loading, data } = useQuery(GET_CLIENTS, {
+  const { refetch, loading, empty, data } = useQuery(GET_CLIENTS, {
     variables: { trainerId: 2 },
   })
+
+  const hasData = data?.clients?.length || false
+
+  const displayList = () => {
+    if (empty) {
+      return <div>Empty data...</div>
+    }
+
+    if (loading) {
+      return <div>Loading...</div>
+    }
+
+    if (hasData) {
+      return data.clients.map((client) => (
+        <ClientListItem
+          key={client.id}
+          user={client}
+          refreshClients={refetch}
+        />
+      ))
+    }
+
+    return (
+      <div>
+        <h3>No clients assigned</h3>
+        <h4>Please click add client to assign a client</h4>
+      </div>
+    )
+  }
 
   return (
     <div className="clientListHeader">
@@ -31,24 +60,7 @@ const ClientList = () => {
       {isVisible && (
         <NewClient setVisibility={setVisibility} refreshClients={refetch} />
       )}
-      <div className="clientList">
-        {loading ? (
-          <div>Loading...</div>
-        ) : data.clients.length == 0 ? (
-          <div>
-            <h3>No clients assigned</h3>
-            <h4>Please click add client to assign a client</h4>
-          </div>
-        ) : (
-          data.clients.map((client) => (
-            <ClientListItem
-              key={client.id}
-              user={client}
-              refreshClients={refetch}
-            />
-          ))
-        )}
-      </div>
+      <div className="clientList">{displayList()}</div>
     </div>
   )
 }

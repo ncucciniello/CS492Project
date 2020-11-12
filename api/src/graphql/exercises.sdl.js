@@ -24,6 +24,10 @@ export const schema = gql`
     exerciseType: Int!
   }
 
+  input CreateExerciseTypeIdInput {
+    id: String!
+  }
+
   input CreateNewExerciseInput {
     weight: String!
     repsAssigned: String!
@@ -31,15 +35,16 @@ export const schema = gql`
     exerciseType: CreateExerciseTypeIdInput!
   }
 
-  input CreateExerciseTypeIdInput {
+  input UpdateExerciseTypeInput {
     id: String!
   }
 
-  input UpdateExerciseInput {
-    workoutId: Int
-    repsComplete: Int
-    setsComplete: Int
-    exerciseType: Int
+  input UpdateAssignedExerciseInput {
+    id: String!
+    weight: String
+    repsAssigned: String
+    setsAssigned: String
+    exerciseType: UpdateExerciseTypeInput
   }
 
   type Mutation {

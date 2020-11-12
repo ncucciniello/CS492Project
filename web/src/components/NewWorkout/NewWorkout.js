@@ -11,8 +11,8 @@ const GET_EXERCISE_TYPES = gql`
   }
 `
 const CREATE_WORKOUT = gql`
-  mutation createFullWorkout($input: CreateFullWorkoutInput!) {
-    createFullWorkout(input: $input) {
+  mutation createWorkout($input: CreateWorkoutInput!) {
+    createWorkout(input: $input) {
       id
       userId
       date
@@ -38,29 +38,34 @@ const NewWorkout = (props) => {
 
   const formMethods = useForm({
     defaultValues: {
-      exercise: [
+      exercises: [
         {
-          exerciseType: { id: null },
-          weight: null,
-          repsAssigned: null,
-          setsAssigned: null,
+          exerciseType: { id: '1' },
+          weight: '100',
+          repsAssigned: '100',
+          setsAssigned: '100',
         },
       ],
     },
   })
 
   const { fields, append, remove } = useFieldArray({
-    control: formMethods.control, // control props comes from useForm (optional: if you are using FormContext)
-    name: 'exercises', // unique name for your Field Array
-    // keyName: "id", default to "id", you can change the key name
+    control: formMethods.control,
+    name: 'exercises',
   })
 
   const onSubmit = (data) => {
     createWorkout({
-      variables: { input: { userId: props.userSelected, ...data } },
+      variables: {
+        input: {
+          userId: props.userSelected,
+          date: props.dateSelected,
+          ...data,
+        },
+      },
     })
-    props.reRender()
     props.setVisibility(false)
+    props.reRender()
   }
 
   return (

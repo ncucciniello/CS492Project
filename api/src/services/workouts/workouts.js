@@ -10,26 +10,13 @@ export const userWorkouts = ({ input }) => {
       userId: input.userId,
       date: {
         gte: new Date(new Date(input.date)).toISOString(),
-        lte: new Date(+new Date(input.date) + 86400000).toISOString(),
+        lt: new Date(+new Date(input.date) + 86400000).toISOString(),
       },
     },
   })
 }
 
 export const createWorkout = ({ input }) => {
-  return db.workout.create({
-    data: {
-      user: {
-        connect: {
-          id: input.userId,
-        },
-      },
-      date: input.date,
-    },
-  })
-}
-
-export const createFullWorkout = ({ input }) => {
   return db.workout.create({
     data: {
       user: {
@@ -46,6 +33,31 @@ export const createFullWorkout = ({ input }) => {
           exerciseType: {
             connect: {
               id: parseInt(exercise.exerciseType.id),
+            },
+          },
+        })),
+      },
+    },
+  })
+}
+
+export const updateWorkout = ({ id, input }) => {
+  return db.workout.update({
+    where: { id },
+    data: {
+      exercises: {
+        update: input.exercises.map((exercise) => ({
+          where: {
+            id: parseInt(exercise.id),
+          },
+          data: {
+            weight: parseInt(exercise.weight),
+            repsAssigned: parseInt(exercise.repsAssigned),
+            setsAssigned: parseInt(exercise.setsAssigned),
+            exerciseType: {
+              connect: {
+                id: parseInt(exercise.exerciseType.id),
+              },
             },
           },
         })),

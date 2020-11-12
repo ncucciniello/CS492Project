@@ -81,7 +81,7 @@
 
 .workoutContatiner {
   width: 600px;
-  height: 600px;
+  min-height: 300px;
   border: 2px solid black;
   margin: 50px auto;
 }
@@ -101,7 +101,7 @@
 
 .workoutGraph {
   width: 74%;
-  height: 50%;
+  height: 250px;
   border: 2px solid black;
   display: inline-block;
   overflow-y: scroll;
@@ -118,6 +118,7 @@
 
 .newWorkoutModal {
   border: 1px solid black;
+  text-align: center;
 }
 
 .workoutInput {

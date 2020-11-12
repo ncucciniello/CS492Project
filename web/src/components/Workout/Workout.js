@@ -27,7 +27,10 @@ export const GET_WORKOUT = gql`
 
 const Workout = (props) => {
   const [isVisible, setVisibility] = useState(false)
+
   const [dateSelected, setDateSelected] = useState(new Date())
+  const tzOffset = new Date().getTimezoneOffset() * 60000
+  let localISOTime = new Date(dateSelected - tzOffset).toISOString()
 
   const openWorkoutForm = () => {
     setVisibility(true)
@@ -37,16 +40,34 @@ const Workout = (props) => {
     variables: {
       input: {
         userId: props.userSelected,
-        date: new Date(dateSelected).toISOString().split('T', 1)[0],
+        date: localISOTime.split('T', 1)[0],
       },
     },
   })
 
+  const hasData = data?.userWorkouts?.length || false
+
+  const displayWorkout = () => {
+    if (loading) {
+      return <div>Loading...</div>
+    }
+
+    if (hasData) {
+      return <WorkoutGraph data={data} />
+    }
+
+    return (
+      <div className="workoutGraph">
+        <h3>No workouts on {localISOTime.split('T', 1)[0]}</h3>
+      </div>
+    )
+  }
+
   const handleDateChange = (input) => {
     let newDate
-    if (input == 1) {
+    if (input) {
       newDate = new Date(+dateSelected + 86400000)
-    } else if (input == 0) {
+    } else if (!input) {
       newDate = new Date(+dateSelected - 86400000)
     }
     setDateSelected(newDate)
@@ -56,28 +77,24 @@ const Workout = (props) => {
     <div className="workoutContatiner ">
       <div className="workoutHeader">
         <button onClick={() => handleDateChange(0)}>Previous Day</button>
-        <h3>
-          Viewing: {new Date(dateSelected).toISOString().split('T', 1)[0]}
-        </h3>
+        <h3>Viewing: {localISOTime.split('T', 1)[0]}</h3>
         <button onClick={() => handleDateChange(1)}>Next Day</button>
       </div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : data.userWorkouts.length == 0 ? (
-        <div className="workoutGraph">
-          <h3>No workouts on date selected</h3>
-        </div>
-      ) : (
-        <WorkoutGraph data={data} />
-      )}
+      {displayWorkout()}
       <div className="workoutSidebar">
-        <button onClick={openWorkoutForm}>Add Workout</button>
-        <button disabled>Edit Workout</button>
+        <button disabled={hasData} onClick={openWorkoutForm}>
+          Add Workout
+        </button>
+        <button disabled={!hasData} onClick={openWorkoutForm}>
+          Edit Workout
+        </button>
       </div>
       {isVisible && (
         <NewWorkout
+          data={data}
           reRender={refetch}
           userSelected={props.userSelected}
+          dateSelected={localISOTime}
           setVisibility={setVisibility}
         />
       )}
