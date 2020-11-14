@@ -39,6 +39,24 @@ const NewClient = (props) => {
     props.refreshClients()
   }
 
+  const hasData = data?.unassignedTrainees?.length || false
+
+  const displayTraineeOptions = () => {
+    if (loading) {
+      return <option>Lodaing...</option>
+    }
+
+    if (hasData) {
+      return data.unassignedTrainees.map((trainee) => (
+        <option key={trainee.id} value={trainee.id}>
+          {trainee.name}
+        </option>
+      ))
+    }
+
+    return <option>There are no unassigned trainees</option>
+  }
+
   return (
     <div className="client-form">
       <Flash timeout={1000} />
@@ -47,19 +65,7 @@ const NewClient = (props) => {
           Choose Trainee:
         </Label>
 
-        <SelectField name="traineeId">
-          {loading ? (
-            <option>Loading ...</option>
-          ) : data.unassignedTrainees.length == 0 ? (
-            <option>There are no unassigned trainees</option>
-          ) : (
-            data.unassignedTrainees.map((trainee) => (
-              <option key={trainee.id} value={trainee.id}>
-                {trainee.name}
-              </option>
-            ))
-          )}
-        </SelectField>
+        <SelectField name="traineeId">{displayTraineeOptions()}</SelectField>
 
         <Submit>Add Client</Submit>
       </Form>

@@ -54,6 +54,27 @@ const NewWorkout = (props) => {
     name: 'exercises',
   })
 
+  const hasData = data?.exerciseTypes?.length || false
+
+  const displayExerciseTypes = () => {
+    if (loading) {
+      return <option>Lodaing...</option>
+    }
+
+    if (hasData) {
+      ;<option value="" disabled>
+        Pick a Exercise Type
+      </option>
+      data.exerciseTypes.map((exerciseType) => (
+        <option key={exerciseType.id} value={exerciseType.id}>
+          {exerciseType.name}
+        </option>
+      ))
+    }
+
+    return <option>There are no exercise types</option>
+  }
+
   const onSubmit = (data) => {
     createWorkout({
       variables: {
@@ -83,21 +104,7 @@ const NewWorkout = (props) => {
                   required: true,
                 }}
               >
-                <option value="" disabled>
-                  Pick a Exercise Type
-                </option>
-
-                {loading ? (
-                  <option>Loading ...</option>
-                ) : data.exerciseTypes.length == 0 ? (
-                  <option>There are no exercise types</option>
-                ) : (
-                  data.exerciseTypes.map((exerciseType) => (
-                    <option key={exerciseType.id} value={exerciseType.id}>
-                      {exerciseType.name}
-                    </option>
-                  ))
-                )}
+                {displayExerciseTypes()}
               </SelectField>
 
               <TextField
