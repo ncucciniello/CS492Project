@@ -13,7 +13,7 @@ export const GET_CLIENTS = gql`
   }
 `
 
-const ClientList = () => {
+const ClientList = (props) => {
   const [isVisible, setVisibility] = useState(false)
 
   const openTraineeList = () => {
@@ -41,6 +41,7 @@ const ClientList = () => {
           key={client.id}
           user={client}
           refreshClients={refetch}
+          setSelectedClient={props.setSelectedClient}
         />
       ))
     }

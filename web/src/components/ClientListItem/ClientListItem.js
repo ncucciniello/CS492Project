@@ -24,6 +24,9 @@ const ClientListItem = (props) => {
   return (
     <div className="clientListItem">
       <h2>{props.user.name}</h2>
+      <button onClick={() => props.setSelectedClient(props.user.id)}>
+        Select
+      </button>
       <button onClick={() => onSubmit(props.user.id)}>Remove</button>
     </div>
   )
