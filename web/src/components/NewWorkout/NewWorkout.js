@@ -62,10 +62,7 @@ const NewWorkout = (props) => {
     }
 
     if (hasData) {
-      ;<option value="" disabled>
-        Pick a Exercise Type
-      </option>
-      data.exerciseTypes.map((exerciseType) => (
+      return data.exerciseTypes.map((exerciseType) => (
         <option key={exerciseType.id} value={exerciseType.id}>
           {exerciseType.name}
         </option>
@@ -75,8 +72,8 @@ const NewWorkout = (props) => {
     return <option>There are no exercise types</option>
   }
 
-  const onSubmit = (data) => {
-    createWorkout({
+  const submitForm = async (data) => {
+    await createWorkout({
       variables: {
         input: {
           userId: props.userSelected,
@@ -94,7 +91,7 @@ const NewWorkout = (props) => {
       <div className="workout-form">
         <h3>Add Workout</h3>
         <Flash timeout={1000} />
-        <Form onSubmit={onSubmit} formMethods={formMethods}>
+        <Form onSubmit={submitForm} formMethods={formMethods}>
           {fields.map((field, index) => (
             <div key={`exercises[${index}]`}>
               <SelectField
@@ -104,6 +101,9 @@ const NewWorkout = (props) => {
                   required: true,
                 }}
               >
+                <option value="" disabled>
+                  Pick an Exercise Type
+                </option>
                 {displayExerciseTypes()}
               </SelectField>
 
