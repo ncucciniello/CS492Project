@@ -36,14 +36,32 @@ const NewWorkout = (props) => {
 
   const [createWorkout] = useMutation(CREATE_WORKOUT)
 
+  console.log('hasWorkouts? ' + props.hasWorkouts)
+  // console.log('data ' + props.data.userWorkouts?)
+
+  // const getDefaulValues = () => {
+  //   if(props.hasWorkouts) {
+  //       defaultValues: {
+  //       exercises: [
+  //         {
+  //           exerciseType: { id: '1' },
+  //           weight: '0',
+  //           repsAssigned: '0',
+  //           setsAssigned: '0',
+  //         },
+  //       ],
+  //     },
+  //   }
+  // }
+
   const formMethods = useForm({
     defaultValues: {
       exercises: [
         {
           exerciseType: { id: '1' },
-          weight: '100',
-          repsAssigned: '100',
-          setsAssigned: '100',
+          weight: '0',
+          repsAssigned: '0',
+          setsAssigned: '0',
         },
       ],
     },
@@ -54,14 +72,14 @@ const NewWorkout = (props) => {
     name: 'exercises',
   })
 
-  const hasData = data?.exerciseTypes?.length || false
+  const hasExerciseTypes = data?.exerciseTypes?.length || false
 
   const displayExerciseTypes = () => {
     if (loading) {
       return <option>Lodaing...</option>
     }
 
-    if (hasData) {
+    if (hasExerciseTypes) {
       return data.exerciseTypes.map((exerciseType) => (
         <option key={exerciseType.id} value={exerciseType.id}>
           {exerciseType.name}

@@ -45,14 +45,14 @@ const Workout = (props) => {
     },
   })
 
-  const hasData = data?.userWorkouts?.length || false
+  const hasWorkouts = data?.userWorkouts?.length || false
 
   const displayWorkout = () => {
     if (loading) {
       return <div>Loading...</div>
     }
 
-    if (hasData) {
+    if (hasWorkouts) {
       return <WorkoutGraph data={data} />
     }
 
@@ -82,16 +82,17 @@ const Workout = (props) => {
       </div>
       {displayWorkout()}
       <div className="workoutSidebar">
-        <button disabled={hasData} onClick={openWorkoutForm}>
+        <button disabled={hasWorkouts} onClick={openWorkoutForm}>
           Add Workout
         </button>
-        <button disabled={!hasData} onClick={openWorkoutForm}>
+        <button disabled={!hasWorkouts} onClick={openWorkoutForm}>
           Edit Workout
         </button>
       </div>
       {isVisible && (
         <NewWorkout
           data={data}
+          hasWorkouts={hasWorkouts}
           reRender={refetch}
           userSelected={props.userSelected}
           dateSelected={localISOTime}
