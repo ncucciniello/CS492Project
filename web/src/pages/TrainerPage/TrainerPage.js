@@ -4,13 +4,21 @@ import Workout from 'src/components/Workout'
 import { useState } from 'react'
 
 const TrainerPage = () => {
+  const currentUserId = 2
+  const currentUserType = 'Trainer'
   const [selectedClient, setSelectedClient] = useState(0)
 
   return (
     <UserLayout>
-      <ClientList setSelectedClient={setSelectedClient} />
+      <ClientList
+        currentUserId={currentUserId}
+        setSelectedClient={setSelectedClient}
+      />
       <h2>Displaying workout for client id: {selectedClient}</h2>
-      <Workout userSelected={selectedClient} />
+      <Workout
+        currentUserType={currentUserType}
+        userSelected={selectedClient}
+      />
       {/* <div className="exerciseProgressContatiner ">
         <div className="exerciseProgress">
           Exercise Progress Graph Goes here

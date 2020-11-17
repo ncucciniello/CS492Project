@@ -1,5 +1,6 @@
 import WorkoutGraph from 'src/components/WorkoutGraph'
 import NewWorkout from 'src/components/NewWorkout'
+import LogWorkout from 'src/components/LogWorkout'
 import { useQuery } from '@redwoodjs/web'
 import { useState } from 'react'
 
@@ -17,6 +18,7 @@ export const GET_WORKOUT = gql`
         setsAssigned
         setsComplete
         exerciseType {
+          id
           name
           description
         }
@@ -26,14 +28,20 @@ export const GET_WORKOUT = gql`
 `
 
 const Workout = (props) => {
-  const [isVisible, setVisibility] = useState(false)
+  const [newWorkout, toggleNewWorkout] = useState(false)
+  const [logWorkout, toggleLogWorkout] = useState(false)
+  const [isTrainer, setIsTrainer] = useState(false)
 
   const [dateSelected, setDateSelected] = useState(new Date())
   const tzOffset = new Date().getTimezoneOffset() * 60000
   let localISOTime = new Date(dateSelected - tzOffset).toISOString()
 
   const openWorkoutForm = () => {
-    setVisibility(true)
+    toggleNewWorkout(true)
+  }
+
+  const openLogWorkoutForm = () => {
+    toggleLogWorkout(true)
   }
 
   const { loading, data, refetch } = useQuery(GET_WORKOUT, {
@@ -42,6 +50,11 @@ const Workout = (props) => {
         userId: props.userSelected,
         date: localISOTime.split('T', 1)[0],
       },
+    },
+    onCompleted: () => {
+      if (props.currentUserType == 'Trainer') {
+        setIsTrainer(true)
+      }
     },
   })
 
@@ -81,22 +94,43 @@ const Workout = (props) => {
         <button onClick={() => handleDateChange(1)}>Next Day</button>
       </div>
       {displayWorkout()}
-      <div className="workoutSidebar">
-        <button disabled={hasWorkouts} onClick={openWorkoutForm}>
-          Add Workout
-        </button>
-        <button disabled={!hasWorkouts} onClick={openWorkoutForm}>
-          Edit Workout
-        </button>
-      </div>
-      {isVisible && (
+
+      {isTrainer && (
+        <div className="workoutSidebar">
+          <button disabled={hasWorkouts} onClick={openWorkoutForm}>
+            Add Workout
+          </button>
+          <button disabled={!hasWorkouts} onClick={openWorkoutForm}>
+            Edit Workout
+          </button>
+        </div>
+      )}
+
+      {!isTrainer && (
+        <div className="workoutSidebar">
+          <button onClick={openLogWorkoutForm}>Log Workout</button>
+          <button onClick={openLogWorkoutForm}> Edit Logged Workout</button>
+        </div>
+      )}
+
+      {newWorkout && (
         <NewWorkout
           data={data}
           hasWorkouts={hasWorkouts}
           reRender={refetch}
           userSelected={props.userSelected}
           dateSelected={localISOTime}
-          setVisibility={setVisibility}
+          setVisibility={toggleNewWorkout}
+        />
+      )}
+      {logWorkout && (
+        <LogWorkout
+          data={data}
+          // hasWorkouts={hasWorkouts}
+          reRender={refetch}
+          userSelected={props.userSelected}
+          dateSelected={localISOTime}
+          setVisibility={toggleLogWorkout}
         />
       )}
     </div>

@@ -9,7 +9,9 @@ const WorkoutGraph = (props) => {
           <h4>{exercise.exerciseType.name}</h4>
           <p>Weight: {exercise.weight}</p>
           <p>Reps: {exercise.repsAssigned}</p>
+          <p>Reps Completed: {exercise.repsCompleted}</p>
           <p>Sets: {exercise.setsAssigned}</p>
+          <p>Sets Completed: {exercise.repsCompleted}</p>
         </div>
       ))}
     </div>

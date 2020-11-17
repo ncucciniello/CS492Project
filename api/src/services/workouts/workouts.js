@@ -46,11 +46,19 @@ export const updateWorkout = ({ id, input }) => {
     where: { id },
     data: {
       exercises: {
-        update: input.exercises.map((exercise) => ({
-          where: {
-            id: parseInt(exercise.id),
+        upsert: input.exercises.map((exercise) => ({
+          where: { id: parseInt(exercise.id) || undefined },
+          create: {
+            weight: parseInt(exercise.weight),
+            repsAssigned: parseInt(exercise.repsAssigned),
+            setsAssigned: parseInt(exercise.setsAssigned),
+            exerciseType: {
+              connect: {
+                id: parseInt(exercise.exerciseType.id),
+              },
+            },
           },
-          data: {
+          update: {
             weight: parseInt(exercise.weight),
             repsAssigned: parseInt(exercise.repsAssigned),
             setsAssigned: parseInt(exercise.setsAssigned),

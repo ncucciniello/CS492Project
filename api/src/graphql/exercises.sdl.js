@@ -29,6 +29,7 @@ export const schema = gql`
   }
 
   input CreateNewExerciseInput {
+    id: String
     weight: String!
     repsAssigned: String!
     setsAssigned: String!

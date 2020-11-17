@@ -1,4 +1,10 @@
-import { Form, SelectField, TextField, Submit } from '@redwoodjs/forms'
+import {
+  Form,
+  SelectField,
+  TextField,
+  HiddenField,
+  Submit,
+} from '@redwoodjs/forms'
 import { Flash, useMutation, useQuery } from '@redwoodjs/web'
 import { useForm, useFieldArray } from 'react-hook-form'
 
@@ -29,41 +35,54 @@ const CREATE_WORKOUT = gql`
   }
 `
 
+const UPDATE_WORKOUT = gql`
+  mutation UpdateWorkout($id: Int, $input: UpdateWorkoutInput!) {
+    updateWorkout(id: $id, input: $input) {
+      id
+      exercises {
+        id
+        workoutId
+        weight
+        repsAssigned
+        setsAssigned
+        exerciseType {
+          id
+          name
+          description
+        }
+      }
+    }
+  }
+`
+
 const NewWorkout = (props) => {
   const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
     fetchPolicy: 'network-only',
   })
 
   const [createWorkout] = useMutation(CREATE_WORKOUT)
+  const [updateWorkout] = useMutation(UPDATE_WORKOUT)
 
-  console.log('hasWorkouts? ' + props.hasWorkouts)
-  // console.log('data ' + props.data.userWorkouts?)
+  const setDefaultValues = () => {
+    const myDefault = [
+      {
+        exerciseType: { id: '' },
+        weight: '',
+        repsAssigned: '',
+        setsAssigned: '',
+      },
+    ]
 
-  // const getDefaulValues = () => {
-  //   if(props.hasWorkouts) {
-  //       defaultValues: {
-  //       exercises: [
-  //         {
-  //           exerciseType: { id: '1' },
-  //           weight: '0',
-  //           repsAssigned: '0',
-  //           setsAssigned: '0',
-  //         },
-  //       ],
-  //     },
-  //   }
-  // }
+    if (props.hasWorkouts) {
+      return props.data?.userWorkouts[0].exercises
+    } else {
+      return myDefault
+    }
+  }
 
   const formMethods = useForm({
     defaultValues: {
-      exercises: [
-        {
-          exerciseType: { id: '1' },
-          weight: '0',
-          repsAssigned: '0',
-          setsAssigned: '0',
-        },
-      ],
+      exercises: setDefaultValues(),
     },
   })
 
@@ -91,15 +110,24 @@ const NewWorkout = (props) => {
   }
 
   const submitForm = async (data) => {
-    await createWorkout({
-      variables: {
-        input: {
-          userId: props.userSelected,
-          date: props.dateSelected,
-          ...data,
+    if (!props.hasWorkouts) {
+      await createWorkout({
+        variables: {
+          input: {
+            userId: props.userSelected,
+            date: props.dateSelected,
+            ...data,
+          },
         },
-      },
-    })
+      })
+    } else {
+      await updateWorkout({
+        variables: {
+          id: props.data.userWorkouts[0].id,
+          input: data,
+        },
+      })
+    }
     props.setVisibility(false)
     props.reRender()
   }
@@ -110,58 +138,87 @@ const NewWorkout = (props) => {
         <h3>Add Workout</h3>
         <Flash timeout={1000} />
         <Form onSubmit={submitForm} formMethods={formMethods}>
-          {fields.map((field, index) => (
-            <div key={`exercises[${index}]`}>
-              <SelectField
-                name={`exercises[${index}].exerciseType.id`}
-                defaultValue=""
-                validation={{
-                  required: true,
-                }}
-              >
-                <option value="" disabled>
-                  Pick an Exercise Type
-                </option>
-                {displayExerciseTypes()}
-              </SelectField>
+          {fields.map((field, index) => {
+            return (
+              <div key={field.id}>
+                <HiddenField
+                  name={`exercises[${index}].id`}
+                  className="workoutInput"
+                  defaultValue={`${field?.id}`}
+                />
 
-              <TextField
-                name={`exercises[${index}].weight`}
-                className="workoutInput"
-                placeholder="Weight"
-                validation={{
-                  required: true,
-                }}
-                errorClassName="error"
-              />
-              <TextField
-                name={`exercises[${index}].repsAssigned`}
-                className="workoutInput"
-                placeholder="Reps"
-                validation={{
-                  required: true,
-                }}
-                errorClassName="error"
-              />
-              <TextField
-                name={`exercises[${index}].setsAssigned`}
-                className="workoutInput"
-                placeholder="Sets"
-                validation={{
-                  required: true,
-                }}
-                errorClassName="error"
-              />
-              <button type="button" onClick={() => remove(index)}>
-                Delete
-              </button>
-            </div>
-          ))}
+                {!loading && (
+                  <SelectField
+                    name={`exercises[${index}].exerciseType.id`}
+                    defaultValue={`${field.exerciseType?.id}`}
+                  >
+                    <option value="" disabled>
+                      Pick an Exercise Type
+                    </option>
+                    {displayExerciseTypes()}
+                  </SelectField>
+                )}
 
-          <button type="button" onClick={() => append()}>
+                <TextField
+                  name={`exercises[${index}].weight`}
+                  className="workoutInput"
+                  placeholder="Weight"
+                  defaultValue={`${field?.weight}`}
+                  validation={{
+                    required: true,
+                  }}
+                  errorClassName="error"
+                />
+                <TextField
+                  name={`exercises[${index}].repsAssigned`}
+                  className="workoutInput"
+                  placeholder="Reps"
+                  defaultValue={`${field?.repsAssigned}`}
+                  validation={{
+                    required: true,
+                  }}
+                  errorClassName="error"
+                />
+                <TextField
+                  name={`exercises[${index}].setsAssigned`}
+                  className="workoutInput"
+                  placeholder="Sets"
+                  defaultValue={`${field?.setsAssigned}`}
+                  validation={{
+                    required: true,
+                  }}
+                  errorClassName="error"
+                />
+                <button type="button" onClick={() => remove(index)}>
+                  Delete
+                </button>
+              </div>
+            )
+          })}
+
+          <button
+            type="button"
+            onClick={() =>
+              append({
+                exerciseType: { id: '' },
+                weight: '',
+                repsAssigned: '',
+                setsAssigned: '',
+              })
+            }
+          >
             Add Exercise
           </button>
-          <Submit>Save workout</Submit>
+
+          <button type="button" onClick={() => props.setVisibility(false)}>
+            Cancel
+          </button>
+
+          {props.hasWorkouts ? (
+            <Submit>Update workout</Submit>
+          ) : (
+            <Submit>Save workout</Submit>
+          )}
         </Form>
       </div>
     </div>
