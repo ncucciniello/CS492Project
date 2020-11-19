@@ -48,6 +48,12 @@ export const schema = gql`
     exerciseType: UpdateExerciseTypeInput
   }
 
+  input LogExerciseInput {
+    id: String!
+    repsComplete: String
+    setsComplete: String
+  }
+
   type Mutation {
     createExercise(input: CreateExerciseInput!): Exercise
   }

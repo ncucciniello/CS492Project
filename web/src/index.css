@@ -121,8 +121,35 @@
   text-align: center;
 }
 
+.label {
+  display: inline-block;
+  border: 2px solid white;
+  margin: 0;
+  padding: 1px 2px;
+  color: black;
+  width: 100px;
+  text-align: left;
+}
+
+.selectLabel {
+  display: inline-block;
+  border: 2px solid white;
+  margin: 0;
+  padding: 1px 2px;
+  color: black;
+  width: 150px;
+  text-align: left;
+}
+
 .workoutInput {
-  width: 50px;
+  width: 100px;
+  /* padding: 0; */
+  text-align: right;
+}
+
+.workoutInputSelect {
+  width: 150px;
+  text-align: right;
 }
 
 .exerciseProgressContatiner {

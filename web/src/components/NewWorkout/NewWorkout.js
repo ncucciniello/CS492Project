@@ -135,25 +135,30 @@ const NewWorkout = (props) => {
   return (
     <div className="newWorkoutModal">
       <div className="workout-form">
-        <h3>Add Workout</h3>
+        {props.hasWorkouts ? <h3>Edit Workout</h3> : <h3>Add Workout</h3>}
         <Flash timeout={1000} />
         <Form onSubmit={submitForm} formMethods={formMethods}>
+          <p className="selectLabel">Exercise Type</p>
+          <p className="label">Weight</p>
+          <p className="label">Reps</p>
+          <p className="label">Sets</p>
+
           {fields.map((field, index) => {
             return (
               <div key={field.id}>
                 <HiddenField
                   name={`exercises[${index}].id`}
-                  className="workoutInput"
                   defaultValue={`${field?.id}`}
                 />
 
                 {!loading && (
                   <SelectField
                     name={`exercises[${index}].exerciseType.id`}
+                    className="workoutInputSelect"
                     defaultValue={`${field.exerciseType?.id}`}
                   >
                     <option value="" disabled>
-                      Pick an Exercise Type
+                      Pick an Exercise
                     </option>
                     {displayExerciseTypes()}
                   </SelectField>

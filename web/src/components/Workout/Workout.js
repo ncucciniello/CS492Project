@@ -59,6 +59,7 @@ const Workout = (props) => {
   })
 
   const hasWorkouts = data?.userWorkouts?.length || false
+  const isLogged = data?.userWorkouts[0]?.exercises[0].repsComplete !== null
 
   const displayWorkout = () => {
     if (loading) {
@@ -108,8 +109,18 @@ const Workout = (props) => {
 
       {!isTrainer && (
         <div className="workoutSidebar">
-          <button onClick={openLogWorkoutForm}>Log Workout</button>
-          <button onClick={openLogWorkoutForm}> Edit Logged Workout</button>
+          <button
+            disabled={!hasWorkouts || isLogged}
+            onClick={openLogWorkoutForm}
+          >
+            Log Workout
+          </button>
+          <button
+            disabled={!hasWorkouts || !isLogged}
+            onClick={openLogWorkoutForm}
+          >
+            Edit Logged Workout
+          </button>
         </div>
       )}
 
@@ -123,10 +134,12 @@ const Workout = (props) => {
           setVisibility={toggleNewWorkout}
         />
       )}
+
       {logWorkout && (
         <LogWorkout
           data={data}
-          // hasWorkouts={hasWorkouts}
+          hasWorkouts={hasWorkouts}
+          isLogged={isLogged}
           reRender={refetch}
           userSelected={props.userSelected}
           dateSelected={localISOTime}

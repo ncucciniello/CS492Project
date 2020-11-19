@@ -74,6 +74,23 @@ export const updateWorkout = ({ id, input }) => {
   })
 }
 
+export const logWorkout = ({ id, input }) => {
+  return db.workout.update({
+    where: { id },
+    data: {
+      exercises: {
+        update: input.exercises.map((exercise) => ({
+          data: {
+            repsComplete: parseInt(exercise.repsComplete),
+            setsComplete: parseInt(exercise.setsComplete),
+          },
+          where: { id: parseInt(exercise.id) },
+        })),
+      },
+    },
+  })
+}
+
 export const Workout = {
   exercises: (_obj, { root }) =>
     db.workout
