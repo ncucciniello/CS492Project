@@ -40,7 +40,6 @@ const LogWorkout = (props) => {
         },
       },
     })
-    console.log(data)
     props.setVisibility(false)
     props.reRender()
   }

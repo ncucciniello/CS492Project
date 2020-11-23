@@ -1,43 +1,61 @@
+import ProgressGraph from 'src/components/ProgressGraph'
 import { useState } from 'react'
 import { useQuery } from '@redwoodjs/web'
+import { Form, SelectField } from '@redwoodjs/forms'
+import { useForm } from 'react-hook-form'
 
-export const GET_PROGRESS = gql`
-  query GetExerciseProgress($input: SearchProgressInput!) {
-    exerciseProgress(input: $input) {
+const GET_EXERCISE_TYPES = gql`
+  query getExerciseTypes {
+    exerciseTypes {
       id
-      weight
-      repsComplete
-      setsComplete
-      exerciseType {
-        id
-        name
-      }
-      workout {
-        id
-        userId
-        date
-      }
+      name
     }
   }
 `
 
 const Progress = (props) => {
-  const [selectedExerciseId] = useState(1)
+  const [selectedExerciseId, setSelectedExerciseId] = useState(1)
 
-  const { data } = useQuery(GET_PROGRESS, {
-    variables: {
-      input: {
-        userId: props.userSelected,
-        exerciseTypeId: selectedExerciseId,
-      },
-    },
-  })
+  const { loading, data } = useQuery(GET_EXERCISE_TYPES)
 
-  console.log(data)
+  const formMethods = useForm()
+
+  const handleChange = (e) => {
+    setSelectedExerciseId(parseInt(e.target.value))
+  }
+
+  const hasExerciseTypes = data?.exerciseTypes?.length || false
+
+  const displayExerciseOptions = () => {
+    if (loading) {
+      return <option>Lodaing...</option>
+    }
+
+    if (hasExerciseTypes) {
+      return data.exerciseTypes.map((exercise) => (
+        <option key={exercise.id} value={exercise.id}>
+          {exercise.name}
+        </option>
+      ))
+    }
+
+    return <option>There are no unassigned trainees</option>
+  }
 
   return (
     <div className="exerciseProgressContatiner ">
-      <div className="exerciseProgress">Exercise Progress Graph Goes here</div>
+      <div className="exerciseProgressHeader">
+        <Form formMethods={formMethods}>
+          <h4 className="progressLabel">Viewing Progress for:</h4>
+          <SelectField onChange={handleChange} name="exerciseTypeId">
+            {displayExerciseOptions()}
+          </SelectField>
+        </Form>
+      </div>
+      <ProgressGraph
+        userSelected={props.userSelected}
+        selectedExerciseId={selectedExerciseId}
+      />
     </div>
   )
 }
