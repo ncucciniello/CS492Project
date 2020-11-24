@@ -46,11 +46,9 @@ export const updateWorkout = ({ id, input }) => {
     where: { id },
     data: {
       exercises: {
-        update: input.exercises.map((exercise) => ({
-          where: {
-            id: parseInt(exercise.id),
-          },
-          data: {
+        upsert: input.exercises.map((exercise) => ({
+          where: { id: parseInt(exercise.id) || undefined || null },
+          create: {
             weight: parseInt(exercise.weight),
             repsAssigned: parseInt(exercise.repsAssigned),
             setsAssigned: parseInt(exercise.setsAssigned),
@@ -60,6 +58,33 @@ export const updateWorkout = ({ id, input }) => {
               },
             },
           },
+          update: {
+            weight: parseInt(exercise.weight),
+            repsAssigned: parseInt(exercise.repsAssigned),
+            setsAssigned: parseInt(exercise.setsAssigned),
+            exerciseType: {
+              connect: {
+                id: parseInt(exercise.exerciseType.id),
+              },
+            },
+          },
+        })),
+      },
+    },
+  })
+}
+
+export const logWorkout = ({ id, input }) => {
+  return db.workout.update({
+    where: { id },
+    data: {
+      exercises: {
+        update: input.exercises.map((exercise) => ({
+          data: {
+            repsComplete: parseInt(exercise.repsComplete),
+            setsComplete: parseInt(exercise.setsComplete),
+          },
+          where: { id: parseInt(exercise.id) },
         })),
       },
     },

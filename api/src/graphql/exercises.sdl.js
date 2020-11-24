@@ -8,12 +8,18 @@ export const schema = gql`
     setsAssigned: Int!
     setsComplete: Int
     exerciseTypeId: Int!
-    workout: Workout!
+    workout: Workout
     exerciseType: ExerciseType!
+  }
+
+  input SearchProgressInput {
+    userId: Int!
+    exerciseTypeId: Int!
   }
 
   type Query {
     exercises: [Exercise!]!
+    exerciseProgress(input: SearchProgressInput!): [Exercise!]!
   }
 
   input CreateExerciseInput {
@@ -29,6 +35,7 @@ export const schema = gql`
   }
 
   input CreateNewExerciseInput {
+    id: String
     weight: String!
     repsAssigned: String!
     setsAssigned: String!
@@ -45,6 +52,12 @@ export const schema = gql`
     repsAssigned: String
     setsAssigned: String
     exerciseType: UpdateExerciseTypeInput
+  }
+
+  input LogExerciseInput {
+    id: String!
+    repsComplete: String
+    setsComplete: String
   }
 
   type Mutation {

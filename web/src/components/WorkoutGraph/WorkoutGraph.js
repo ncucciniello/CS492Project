@@ -5,9 +5,9 @@ const WorkoutGraph = (props) => {
   const workout = props.data.userWorkouts[0]
 
   //const Xaxis = () => {
-  var x_array = []
+  var xArray = []
   for (var x = 0; x < workout.exercises.length; x++) {
-    x_array.push(workout.exercises[x].exerciseType.name)
+    xArray.push(workout.exercises[x].exerciseType.name)
   }
 
   var setsAssigned = []
@@ -30,7 +30,7 @@ const WorkoutGraph = (props) => {
 
   const chart = () => {
     setChartData({
-      labels: x_array,
+      labels: xArray,
       datasets: [
         {
           label: 'Sets Assigned',

@@ -1,7 +1,7 @@
 import ClientListItem from 'src/components/ClientListItem'
 import NewClient from 'src/components/NewClient/NewClient'
 import { useState } from 'react'
-import { useQuery } from '@redwoodjs/web'
+import { useEffect, useQuery } from '@redwoodjs/web'
 
 export const GET_CLIENTS = gql`
   query ClientListQuery($trainerId: Int!) {
@@ -21,7 +21,10 @@ const ClientList = (props) => {
   }
 
   const { refetch, loading, empty, data } = useQuery(GET_CLIENTS, {
-    variables: { trainerId: 2 },
+    variables: { trainerId: props.currentUserId },
+    onCompleted: (data) => {
+      props.setSelectedClient(data.clients[0].id)
+    },
   })
 
   const hasData = data?.clients?.length || false
