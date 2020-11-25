@@ -41,7 +41,7 @@ export const createWorkout = ({ input }) => {
   })
 }
 
-export const updateWorkout = ({ id, input }) => {
+export const updateWorkout = ({ id, deletions, input }) => {
   return db.workout.update({
     where: { id },
     data: {
@@ -69,6 +69,7 @@ export const updateWorkout = ({ id, input }) => {
             },
           },
         })),
+        delete: deletions,
       },
     },
   })

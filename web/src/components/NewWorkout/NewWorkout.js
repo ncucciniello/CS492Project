@@ -7,6 +7,7 @@ import {
 } from '@redwoodjs/forms'
 import { Flash, useMutation, useQuery } from '@redwoodjs/web'
 import { useForm, useFieldArray } from 'react-hook-form'
+import { useState } from 'react'
 
 const GET_EXERCISE_TYPES = gql`
   query getExerciseTypes {
@@ -36,8 +37,12 @@ const CREATE_WORKOUT = gql`
 `
 
 const UPDATE_WORKOUT = gql`
-  mutation UpdateWorkout($id: Int, $input: UpdateWorkoutInput!) {
-    updateWorkout(id: $id, input: $input) {
+  mutation UpdateWorkout(
+    $id: Int
+    $deletions: [DeleteExerciseInput]
+    $input: UpdateWorkoutInput!
+  ) {
+    updateWorkout(id: $id, deletions: $deletions, input: $input) {
       id
       exercises {
         id
@@ -56,12 +61,13 @@ const UPDATE_WORKOUT = gql`
 `
 
 const NewWorkout = (props) => {
-  const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
-    fetchPolicy: 'network-only',
-  })
+  const [deletions, setDeletions] = useState([])
 
   const [createWorkout] = useMutation(CREATE_WORKOUT)
   const [updateWorkout] = useMutation(UPDATE_WORKOUT)
+  const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
+    fetchPolicy: 'network-only',
+  })
 
   const setDefaultValues = () => {
     const myDefault = [
@@ -109,6 +115,12 @@ const NewWorkout = (props) => {
     return <option>There are no exercise types</option>
   }
 
+  const handleDetetion = (index, exerciseId) => {
+    remove(index)
+    setDeletions([...deletions, { id: parseInt(exerciseId) }])
+    console.log('exerciseId', exerciseId)
+  }
+
   const submitForm = async (data) => {
     if (!props.hasWorkouts) {
       await createWorkout({
@@ -124,10 +136,14 @@ const NewWorkout = (props) => {
       await updateWorkout({
         variables: {
           id: props.data.userWorkouts[0].id,
+          deletions,
           input: data,
         },
       })
+      console.log('data', data)
+      console.log('deletions', deletions)
     }
+    setDeletions([])
     props.setVisibility(false)
     props.reRender()
   }
@@ -194,7 +210,10 @@ const NewWorkout = (props) => {
                   }}
                   errorClassName="error"
                 />
-                <button type="button" onClick={() => remove(index)}>
+                <button
+                  type="button"
+                  onClick={() => handleDetetion(index, field.id)}
+                >
                   Delete
                 </button>
               </div>
@@ -215,7 +234,13 @@ const NewWorkout = (props) => {
             Add Exercise
           </button>
 
-          <button type="button" onClick={() => props.setVisibility(false)}>
+          <button
+            type="button"
+            onClick={() => {
+              props.setVisibility(false)
+              setDeletions([])
+            }}
+          >
             Cancel
           </button>
 

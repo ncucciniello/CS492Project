@@ -62,7 +62,11 @@ const ClientList = (props) => {
       <h3>Client List</h3>
       <button onClick={openTraineeList}>Add Client +</button>
       {isVisible && (
-        <NewClient setVisibility={setVisibility} refreshClients={refetch} />
+        <NewClient
+          currentClient={data}
+          setVisibility={setVisibility}
+          refreshClients={refetch}
+        />
       )}
       <div className="clientList">{displayList()}</div>
     </div>
