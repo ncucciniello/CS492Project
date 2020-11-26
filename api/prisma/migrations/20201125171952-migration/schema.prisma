@@ -5,11 +5,11 @@ generator client {
 
 datasource DS {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Workout {
-  id                Int               @id @default(autoincrement())
+  id                Int               @id
   relationshipId    Int?
   date              DateTime?
   numberOfExercises Int?
@@ -18,7 +18,7 @@ model Workout {
 }
 
 model Exercise {
-  id              Int            @id @default(autoincrement())
+  id              Int            @id
   workoutId       Int?
   trainerComments String?
   reps            Int?
@@ -34,7 +34,7 @@ model Exercise {
 }
 
 model ExerciseType {
-  id                  Int      @id @default(autoincrement())
+  id                  Int      @id
   exerciseDescription String?
   exerciseName        String?
   Exercise            Exercise @relation(fields: [id], references: [exerciseTypeId])
@@ -54,7 +54,7 @@ model AppUser {
 model UserRelationship {
   trainerName String?
   traineeName String?
-  id          Int       @id @default(autoincrement())
+  id          Int       @id
   trainerId   Int?
   traineeId   Int?
   trainerUser AppUser?  @relation("trainer", fields: [trainerId], references: [id])

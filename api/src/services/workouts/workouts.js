@@ -7,7 +7,10 @@ export const workouts = () => {
 export const userWorkouts = ({ input }) => {
   return db.workout.findMany({
     where: {
-      userId: input.userId,
+      UserRelationship: {
+        traineeId: input.traineeId,
+        trainerId: input.trainerId,
+      },
       date: {
         gte: new Date(new Date(input.date)).toISOString(),
         lt: new Date(+new Date(input.date) + 86400000).toISOString(),
@@ -19,17 +22,17 @@ export const userWorkouts = ({ input }) => {
 export const createWorkout = ({ input }) => {
   return db.workout.create({
     data: {
-      user: {
+      userRelationship: {
         connect: {
-          id: input.userId,
+          userRelationship: input.userRelationshipId,
         },
       },
       date: input.date,
       exercises: {
         create: input.exercises.map((exercise) => ({
           weight: parseInt(exercise.weight),
-          repsAssigned: parseInt(exercise.repsAssigned),
-          setsAssigned: parseInt(exercise.setsAssigned),
+          reps: parseInt(exercise.reps),
+          numberOfSets: parseInt(exercise.numberOfSets),
           exerciseType: {
             connect: {
               id: parseInt(exercise.exerciseType.id),
@@ -70,5 +73,5 @@ export const Workout = {
   exercises: (_obj, { root }) =>
     db.workout
       .findOne({ where: { id: root.id } })
-      .exercises({ include: { exerciseType: true } }),
+      .Exercise({ include: { ExerciseType: true } }),
 }

@@ -7,18 +7,17 @@ export const GET_WORKOUT = gql`
   query GetUserWorkouts($input: SearchWorkoutInput!) {
     userWorkouts(input: $input) {
       id
-      userId
       date
       exercises {
         id
         weight
-        repsAssigned
-        repsComplete
-        setsAssigned
-        setsComplete
-        exerciseType {
-          name
-          description
+        reps
+        actualReps
+        numberOfSets
+        actualSets
+        ExerciseType {
+          exerciseName
+          exerciseDescription
         }
       }
     }
@@ -39,7 +38,8 @@ const Workout = (props) => {
   const { loading, data, refetch } = useQuery(GET_WORKOUT, {
     variables: {
       input: {
-        userId: props.userSelected,
+        trainerId: props.currentUser,
+        traineeId: props.userSelected,
         date: localISOTime.split('T', 1)[0],
       },
     },
@@ -47,6 +47,7 @@ const Workout = (props) => {
 
   const hasWorkouts = data?.userWorkouts?.length || false
 
+  // console.log(data)
   const displayWorkout = () => {
     if (loading) {
       return <div>Loading...</div>

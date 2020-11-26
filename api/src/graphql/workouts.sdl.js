@@ -1,14 +1,15 @@
 export const schema = gql`
   type Workout {
     id: Int!
-    userId: Int!
+    relationshipId: Int!
     date: DateTime
-    user: User!
+    userRelationship: UserRelationship!
     exercises: [Exercise]
   }
 
   input SearchWorkoutInput {
-    userId: Int!
+    traineeId: Int!
+    trainerId: Int!
     date: String!
   }
 
@@ -18,7 +19,7 @@ export const schema = gql`
   }
 
   input CreateWorkoutInput {
-    userId: Int!
+    userRelationshipId: Int!
     date: DateTime
     exercises: [CreateNewExerciseInput]
   }

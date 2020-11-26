@@ -21,7 +21,7 @@ const CREATE_WORKOUT = gql`
         weight
         repsAssigned
         setsAssigned
-        exerciseType {
+        ExerciseType {
           name
         }
       }

@@ -1,23 +1,24 @@
-import { Form, SelectField, Submit, Label } from '@redwoodjs/forms'
+import { Form, HiddenField, SelectField, Submit, Label } from '@redwoodjs/forms'
 import { Flash, useMutation, useQuery } from '@redwoodjs/web'
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 
 const GET_TRAINEES = gql`
-  query getTrainees {
-    unassignedTrainees {
+  query unassignedTrainees {
+    trainees {
       id
-      name
-      email
-      type
-      trainer
+      userName
     }
   }
 `
 
-const UPDATE_TRAINEE = gql`
-  mutation UpdateUser($id: Int, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
-      id
+const CREATE_USER_REALATION = gql`
+  mutation createUserRelation($input: CreateUserRelationshipInput!) {
+    createUserRelation(input: $input) {
+      trainerName
+      trainerId
+      traineeId
+      traineeName
     }
   }
 `
@@ -26,20 +27,27 @@ const NewClient = (props) => {
   const { loading, data } = useQuery(GET_TRAINEES, {
     fetchPolicy: 'network-only',
   })
-
-  const [updateUser] = useMutation(UPDATE_TRAINEE)
+  // console.log(data)
+  const [createUserRealtion] = useMutation(CREATE_USER_REALATION)
+  const [selectedTraineeName, setSelectedTraineeName] = useState('')
 
   const formMethods = useForm()
 
+  const handleChange = () => {
+    const e = document.getElementById('traineeSelecter')
+    setSelectedTraineeName(e.options[e.selectedIndex].text)
+  }
+
   const onSubmit = (selection) => {
-    updateUser({
-      variables: { id: parseInt(selection.traineeId), input: { trainer: 2 } },
+    createUserRealtion({
+      variables: { input: selection },
     })
+    console.log(selection)
     props.setVisibility(false)
     props.refreshClients()
   }
 
-  const hasData = data?.unassignedTrainees?.length || false
+  const hasData = data?.trainees?.length || false
 
   const displayTraineeOptions = () => {
     if (loading) {
@@ -47,9 +55,9 @@ const NewClient = (props) => {
     }
 
     if (hasData) {
-      return data.unassignedTrainees.map((trainee) => (
+      return data.trainees.map((trainee) => (
         <option key={trainee.id} value={trainee.id}>
-          {trainee.name}
+          {trainee.userName}
         </option>
       ))
     }
@@ -60,12 +68,25 @@ const NewClient = (props) => {
   return (
     <div className="client-form">
       <Flash timeout={1000} />
-      <Form onSubmit={onSubmit} formMethods={formMethods}>
+      <Form
+        onSubmit={onSubmit}
+        onChange={handleChange}
+        formMethods={formMethods}
+      >
+        <HiddenField name="traineeName" defaultValue={selectedTraineeName} />
+        <HiddenField
+          name="trainerName"
+          defaultValue={props.currentTrainerName}
+        />
+        <HiddenField name="trainerId" defaultValue={props.currentTrainerId} />
+
         <Label name="name" errorClassName="error">
           Choose Trainee:
         </Label>
 
-        <SelectField name="traineeId">{displayTraineeOptions()}</SelectField>
+        <SelectField name="traineeId" id="traineeSelecter">
+          {displayTraineeOptions()}
+        </SelectField>
 
         <Submit>Add Client</Submit>
       </Form>

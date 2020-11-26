@@ -2,14 +2,15 @@ export const schema = gql`
   type Exercise {
     id: Int!
     workoutId: Int!
+    reps: Int!
+    actualReps: Int
+    numberOfSets: Int!
+    actualSets: Int
     weight: Int!
-    repsAssigned: Int!
-    repsComplete: Int
-    setsAssigned: Int!
-    setsComplete: Int
+    trainerComments: String!
     exerciseTypeId: Int!
     workout: Workout!
-    exerciseType: ExerciseType!
+    ExerciseType: ExerciseType!
   }
 
   type Query {
@@ -19,31 +20,31 @@ export const schema = gql`
   input CreateExerciseInput {
     workoutId: Int!
     weight: Int!
-    repsAssigned: Int!
-    setsAssigned: Int!
-    exerciseType: Int!
+    reps: Int!
+    sets: Int!
+    exerciseTypeId: Int!
   }
 
   input CreateExerciseTypeIdInput {
-    id: String!
+    id: Int!
   }
 
   input CreateNewExerciseInput {
-    weight: String!
-    repsAssigned: String!
-    setsAssigned: String!
+    weight: Int!
+    reps: Int!
+    sets: Int!
     exerciseType: CreateExerciseTypeIdInput!
   }
 
   input UpdateExerciseTypeInput {
-    id: String!
+    id: Int!
   }
 
   input UpdateAssignedExerciseInput {
-    id: String!
-    weight: String
-    repsAssigned: String
-    setsAssigned: String
+    id: Int!
+    weight: Int
+    repsAssigned: Int
+    setsAssigned: Int
     exerciseType: UpdateExerciseTypeInput
   }
 

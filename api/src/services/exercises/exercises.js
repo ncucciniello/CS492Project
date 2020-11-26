@@ -1,11 +1,7 @@
 import { db } from 'src/lib/db'
 
 export const exercises = () => {
-  return db.exercise.findMany({
-    include: {
-      exerciseType: true,
-    },
-  })
+  return db.exercise.findMany()
 }
 
 export const createExercise = ({ input }) => {
@@ -17,8 +13,8 @@ export const createExercise = ({ input }) => {
         },
       },
       weight: input.weight,
-      repsAssigned: input.repsAssigned,
-      setsAssigned: input.setsAssigned,
+      reps: input.reps,
+      numberOfSets: input.numberOfSets,
       exerciseType: {
         connect: {
           id: input.exerciseType,

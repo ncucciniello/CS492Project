@@ -7,8 +7,8 @@ export const GET_CLIENTS = gql`
   query ClientListQuery($trainerId: Int!) {
     clients(trainerId: $trainerId) {
       id
-      name
-      email
+      traineeName
+      traineeId
     }
   }
 `
@@ -21,11 +21,12 @@ const ClientList = (props) => {
   }
 
   const { refetch, loading, empty, data } = useQuery(GET_CLIENTS, {
-    variables: { trainerId: 2 },
+    variables: { trainerId: props.currentTrainerId },
   })
 
   const hasData = data?.clients?.length || false
 
+  console.log(data)
   const displayList = () => {
     if (empty) {
       return <div>Empty data...</div>
@@ -38,10 +39,11 @@ const ClientList = (props) => {
     if (hasData) {
       return data.clients.map((client) => (
         <ClientListItem
-          key={client.id}
-          user={client}
+          key={client.traineeId}
+          client={client}
           refreshClients={refetch}
           setSelectedClient={props.setSelectedClient}
+          relationshipId={client.id}
         />
       ))
     }
@@ -59,7 +61,14 @@ const ClientList = (props) => {
       <h3>Client List</h3>
       <button onClick={openTraineeList}>Add Client +</button>
       {isVisible && (
-        <NewClient setVisibility={setVisibility} refreshClients={refetch} />
+        <NewClient
+          currentClients={data?.clients}
+          setVisibility={setVisibility}
+          refreshClients={refetch}
+          currentClientslist={data}
+          currentTrainerId={props.currentTrainerId}
+          currentTrainerName={props.currentTrainerName}
+        />
       )}
       <div className="clientList">{displayList()}</div>
     </div>

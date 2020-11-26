@@ -1,42 +1,49 @@
 import { db } from 'src/lib/db'
 
 export const users = () => {
-  return db.user.findMany()
-}
-
-export const clients = ({ trainerId }) => {
-  return db.user.findMany({
-    where: {
-      type: 'Trainee',
-      trainer: trainerId,
-    },
-  })
-}
-
-export const unassignedTrainees = () => {
-  return db.user.findMany({
-    where: {
-      type: 'Trainee',
-      trainer: null,
+  return db.appUser.findMany({
+    include: {
+      traineeRelationship: true,
+      trainerRelationship: true,
     },
   })
 }
 
 export const trainees = () => {
-  return db.user.findMany({
+  return db.appUser.findMany({
     where: {
       type: 'Trainee',
+      traineeRelationship: undefined,
+    },
+    include: {
+      traineeRelationship: true,
+    },
+  })
+}
+
+export const unassignedTrainees = () => {
+  return db.appUser.findMany({
+    where: {
+      type: 'Trainee',
+    },
+    include: {
+      traineeRelationship: true,
     },
   })
 }
 
 export const createUser = ({ input }) => {
-  return db.user.create({ data: input })
+  return db.appUser.create({ data: input })
 }
 
 export const updateUser = ({ id, input }) => {
-  return db.user.update({
+  return db.appUser.update({
     data: input,
     where: { id },
   })
 }
+
+// export const AppUser = {
+//   UserRelationships: (_obj, { root }) =>
+//     db.appUser.findOne({ where: { id: root.id } }).UserRelationships(),
+// }

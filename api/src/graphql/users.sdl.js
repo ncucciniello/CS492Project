@@ -1,24 +1,23 @@
 export const schema = gql`
-  type User {
+  type AppUser {
     id: Int!
     email: String!
-    name: String
+    userName: String
     type: String!
-    trainer: Int
+    trainerRelationship: [UserRelationship]
+    traineeRelationship: [UserRelationship]
   }
 
   type Query {
-    users: [User!]!
-    clients(trainerId: Int!): [User!]!
-    unassignedTrainees: [User!]!
-    trainees: [User!]!
+    users: [AppUser!]!
+    trainees: [AppUser]
+    unassignedTrainees: [AppUser]
   }
 
   input CreateUserInput {
     email: String!
-    name: String
+    userName: String
     type: String!
-    trainer: Int
   }
 
   input UpdateUserInput {
@@ -26,7 +25,7 @@ export const schema = gql`
   }
 
   type Mutation {
-    createUser(input: CreateUserInput!): User
-    updateUser(id: Int, input: UpdateUserInput): User!
+    createUser(input: CreateUserInput!): AppUser
+    updateUser(id: Int, input: UpdateUserInput): AppUser!
   }
 `

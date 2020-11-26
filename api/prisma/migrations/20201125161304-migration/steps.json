@@ -1,0 +1,122 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Source",
+        "source": "DS"
+      },
+      "argument": "provider",
+      "newValue": "\"postgresql\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "exercises",
+      "type": "Exercise",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Workout",
+      "field": "Exercise"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "workout",
+      "type": "Workout",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "workout"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "workout"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[workoutId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "workout"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "Workout"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Exercise",
+      "field": "ExerciseType",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "newValue": "[traineeId]"
+    }
+  ]
+}
