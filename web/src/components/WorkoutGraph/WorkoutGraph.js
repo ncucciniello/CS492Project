@@ -8,8 +8,10 @@ const WorkoutGraph = (props) => {
         <div key={exercise.id}>
           <h4>{exercise.ExerciseType.exerciseName}</h4>
           <p>Weight: {exercise.weight}</p>
-          <p>Reps: {exercise.reps}</p>
-          <p>Sets: {exercise.numberOfSets}</p>
+          <p>Reps: {exercise.repsAssigned}</p>
+          <p>Reps Completed: {exercise.repsComplete}</p>
+          <p>Sets: {exercise.setsAssigned}</p>
+          <p>Sets Completed: {exercise.setsComplete}</p>
         </div>
       ))}
     </div>

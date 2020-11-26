@@ -13,8 +13,14 @@ export const schema = gql`
     ExerciseType: ExerciseType!
   }
 
+  input SearchProgressInput {
+    userId: Int!
+    exerciseTypeId: Int!
+  }
+
   type Query {
     exercises: [Exercise!]!
+    exerciseProgress(input: SearchProgressInput!): [Exercise!]!
   }
 
   input CreateExerciseInput {
@@ -46,6 +52,12 @@ export const schema = gql`
     repsAssigned: Int
     setsAssigned: Int
     exerciseType: UpdateExerciseTypeInput
+  }
+
+  input LogExerciseInput {
+    id: String!
+    repsComplete: String
+    setsComplete: String
   }
 
   type Mutation {

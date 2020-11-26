@@ -4,6 +4,19 @@ export const exercises = () => {
   return db.exercise.findMany()
 }
 
+export const exerciseProgress = ({ input }) => {
+  return db.exercise.findMany({
+    where: {
+      exerciseType: {
+        id: input.exerciseTypeId,
+      },
+      workout: {
+        userId: input.userId,
+      },
+    },
+  })
+}
+
 export const createExercise = ({ input }) => {
   return db.exercise.create({
     data: {
@@ -25,8 +38,8 @@ export const createExercise = ({ input }) => {
 }
 
 export const Exercise = {
-  Workout: (_obj, { root }) =>
-    db.exercise.findOne({ where: { id: root.id } }).Workout(),
-  ExerciseType: (_obj, { root }) =>
-    db.exercise.findOne({ where: { id: root.id } }).ExerciseType(),
+  workout: (_obj, { root }) =>
+    db.exercise.findOne({ where: { id: root.id } }).workout(),
+  exerciseType: (_obj, { root }) =>
+    db.exercise.findOne({ where: { id: root.id } }).exerciseType(),
 }

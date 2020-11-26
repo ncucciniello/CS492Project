@@ -28,8 +28,13 @@ export const schema = gql`
     exercises: [UpdateAssignedExerciseInput]
   }
 
+  input LogWorkoutInput {
+    exercises: [LogExerciseInput]
+  }
+
   type Mutation {
     createWorkout(input: CreateWorkoutInput!): Workout
     updateWorkout(id: Int, input: UpdateWorkoutInput!): Workout
+    logWorkout(id: Int, input: LogWorkoutInput!): Workout
   }
 `
