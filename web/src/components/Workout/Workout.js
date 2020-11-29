@@ -90,9 +90,23 @@ const Workout = (props) => {
   return (
     <div className="workoutContatiner ">
       <div className="workoutHeader">
-        <button onClick={() => handleDateChange(0)}>Previous Day</button>
+        <button
+          onClick={() => {
+            handleDateChange(0)
+            isTrainer ? toggleNewWorkout(false) : toggleLogWorkout(false)
+          }}
+        >
+          Previous Day
+        </button>
         <h3>Viewing: {localISOTime.split('T', 1)[0]}</h3>
-        <button onClick={() => handleDateChange(1)}>Next Day</button>
+        <button
+          onClick={() => {
+            handleDateChange(1)
+            isTrainer ? toggleNewWorkout(false) : toggleLogWorkout(false)
+          }}
+        >
+          Next Day
+        </button>
       </div>
       {displayWorkout()}
 
