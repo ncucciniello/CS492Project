@@ -1,4 +1,5 @@
 import { db } from 'src/lib/db'
+import { requireAuth } from 'src/lib/auth'
 
 export const workouts = () => {
   return db.workout.findMany()
@@ -17,6 +18,7 @@ export const userWorkouts = ({ input }) => {
 }
 
 export const createWorkout = ({ input }) => {
+  requireAuth({ role: 'Trainer' })
   return db.workout.create({
     data: {
       user: {
@@ -42,6 +44,7 @@ export const createWorkout = ({ input }) => {
 }
 
 export const updateWorkout = ({ id, deletions, input }) => {
+  requireAuth({ role: 'Trainer' })
   return db.workout.update({
     where: { id },
     data: {
@@ -76,6 +79,7 @@ export const updateWorkout = ({ id, deletions, input }) => {
 }
 
 export const logWorkout = ({ id, input }) => {
+  requireAuth({ role: 'Trainee' })
   return db.workout.update({
     where: { id },
     data: {
