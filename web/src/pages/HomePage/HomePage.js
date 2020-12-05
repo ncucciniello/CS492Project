@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
 
 const HomePage = () => {
-  const { logIn, hasRole, isAuthenticated } = useAuth()
+  const { logIn, logOut, hasRole, isAuthenticated } = useAuth()
 
   return (
     <>
@@ -32,7 +32,11 @@ const HomePage = () => {
         <div className="banner">
           <h1>Welcome to</h1>
           <h1>TrainerTracker</h1>
-          <button onClick={logIn}>Sign up / Log in</button>
+          {isAuthenticated ? (
+            <button onClick={logOut}>Log out</button>
+          ) : (
+            <button onClick={logIn}>Sign up / Log in</button>
+          )}
         </div>
         <div className="info">
           <p>APP INFO GOES HERE</p>
