@@ -19,9 +19,6 @@ const WorkoutGraph = (props) => {
 }
 
 const getWorkoutData = (props) => {
-  // return props.data.traineeWorkouts.length
-  //   ? props.data.traineeWorkouts[0]
-  //   : props.data.userWorkouts[0]
   if (props.data.traineeWorkouts?.length != null) {
     return props.data.traineeWorkouts[0]
   } else {

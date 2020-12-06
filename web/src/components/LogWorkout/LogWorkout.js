@@ -97,7 +97,7 @@ const LogWorkout = (props) => {
                   className="workoutInput"
                   placeholder="Reps Completed"
                   defaultValue={
-                    field?.setsComplete == null ? '' : `${field?.repsComplete}`
+                    field?.actualReps == null ? '' : `${field?.actualReps}`
                   }
                   validation={{
                     required: true,
@@ -110,7 +110,7 @@ const LogWorkout = (props) => {
                   className="workoutInput"
                   placeholder="Sets Completed"
                   defaultValue={
-                    field?.setsComplete == null ? '' : `${field?.setsComplete}`
+                    field?.actualSets == null ? '' : `${field?.actualSets}`
                   }
                   validation={{
                     required: true,

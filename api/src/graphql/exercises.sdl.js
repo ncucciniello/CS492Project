@@ -14,7 +14,7 @@ export const schema = gql`
   }
 
   input SearchProgressInput {
-    userId: Int!
+    traineeId: Int!
     exerciseTypeId: Int!
   }
 

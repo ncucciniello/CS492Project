@@ -11,11 +11,13 @@ export const exercises = () => {
 export const exerciseProgress = ({ input }) => {
   return db.exercise.findMany({
     where: {
-      exerciseType: {
+      ExerciseType: {
         id: input.exerciseTypeId,
       },
       workout: {
-        userId: input.traineeId,
+        UserRelationship: {
+          traineeId: input.traineeId,
+        },
       },
     },
   })

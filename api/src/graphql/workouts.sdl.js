@@ -18,6 +18,11 @@ export const schema = gql`
     userWorkouts(input: SearchWorkoutInput!): [Workout!]!
     traineeWorkouts(input: SearchWorkoutInput2!): [Workout!]!
   }
+
+  input SearchWorkoutInput3 {
+    traineeId: Int!
+    exerciseTypeId: Int!
+  }
   input SearchWorkoutInput2 {
     traineeId: Int!
     date: String!

@@ -5,15 +5,15 @@ export const GET_PROGRESS = gql`
     exerciseProgress(input: $input) {
       id
       weight
-      repsComplete
-      setsComplete
-      exerciseType {
+      actualReps
+      actualSets
+      ExerciseType {
         id
-        name
+        exerciseName
       }
       workout {
         id
-        userId
+        relationshipId
         date
       }
     }
@@ -24,7 +24,7 @@ const ProgressGraph = (props) => {
   const { data } = useQuery(GET_PROGRESS, {
     variables: {
       input: {
-        userId: props.userSelected,
+        traineeId: props.userSelected,
         exerciseTypeId: props.selectedExerciseId,
       },
     },
@@ -41,7 +41,7 @@ const ProgressGraph = (props) => {
       return data.exerciseProgress.map((exercise) => (
         <div key={exercise.id}>
           Date: {exercise.workout.date.split('T', 1)[0]} Total Reps:{' '}
-          {exercise.repsComplete * exercise.setsComplete}
+          {exercise.actualReps * exercise.actualSets}
         </div>
       ))
     }
