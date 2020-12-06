@@ -161,7 +161,7 @@
 
 .exerciseProgressGraph {
   width: 100%;
-  height: 250px;
+  min-height: 250px;
   border: 1px solid black;
   display: inline-block;
   /* margin: 50px auto; */
