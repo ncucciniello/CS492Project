@@ -7,12 +7,13 @@ import {
 } from '@redwoodjs/forms'
 import { Flash, useMutation, useQuery } from '@redwoodjs/web'
 import { useForm, useFieldArray } from 'react-hook-form'
+import { useState } from 'react'
 
 const GET_EXERCISE_TYPES = gql`
   query getExerciseTypes {
     exerciseTypes {
       id
-      name
+      exerciseName
     }
   }
 `
@@ -20,15 +21,15 @@ const CREATE_WORKOUT = gql`
   mutation createWorkout($input: CreateWorkoutInput!) {
     createWorkout(input: $input) {
       id
-      userId
       date
       exercises {
         id
         weight
-        repsAssigned
-        setsAssigned
+        reps
+        numberOfSets
+        exerciseTypeId
         ExerciseType {
-          name
+          exerciseName
         }
       }
     }
@@ -36,26 +37,30 @@ const CREATE_WORKOUT = gql`
 `
 
 const UPDATE_WORKOUT = gql`
-  mutation UpdateWorkout($id: Int, $input: UpdateWorkoutInput!) {
-    updateWorkout(id: $id, input: $input) {
+  mutation UpdateWorkout(
+    $id: Int
+    $deletions: [DeleteExerciseInput]
+    $input: UpdateWorkoutInput!
+  ) {
+    updateWorkout(id: $id, deletions: $deletions, input: $input) {
       id
       exercises {
         id
         workoutId
         weight
-        repsAssigned
-        setsAssigned
-        exerciseType {
+        reps
+        numberOfSets
+        ExerciseType {
           id
-          name
-          description
+          exerciseName
+          exerciseDescription
         }
       }
     }
   }
 `
-
 const NewWorkout = (props) => {
+  const [deletions, setDeletions] = useState([])
   const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
     fetchPolicy: 'network-only',
   })
@@ -66,10 +71,10 @@ const NewWorkout = (props) => {
   const setDefaultValues = () => {
     const myDefault = [
       {
-        exerciseType: { id: '' },
+        ExerciseType: { id: '' },
         weight: '',
-        repsAssigned: '',
-        setsAssigned: '',
+        reps: '',
+        numberOfSets: '',
       },
     ]
 
@@ -101,20 +106,25 @@ const NewWorkout = (props) => {
     if (hasExerciseTypes) {
       return data.exerciseTypes.map((exerciseType) => (
         <option key={exerciseType.id} value={exerciseType.id}>
-          {exerciseType.name}
+          {exerciseType.exerciseName}
         </option>
       ))
     }
 
     return <option>There are no exercise types</option>
   }
+  const handleDeletion = (index, exerciseId) => {
+    remove(index)
+    setDeletions([...deletions, { id: parseInt(exerciseId) }])
+  }
 
   const submitForm = async (data) => {
+    console.log(props.relationshipSelected)
     if (!props.hasWorkouts) {
       await createWorkout({
         variables: {
           input: {
-            userId: props.userSelected,
+            userRelationshipId: props.relationshipSelected,
             date: props.dateSelected,
             ...data,
           },
@@ -124,10 +134,12 @@ const NewWorkout = (props) => {
       await updateWorkout({
         variables: {
           id: props.data.userWorkouts[0].id,
+          deletions,
           input: data,
         },
       })
     }
+    setDeletions([])
     props.setVisibility(false)
     props.reRender()
   }
@@ -153,9 +165,9 @@ const NewWorkout = (props) => {
 
                 {!loading && (
                   <SelectField
-                    name={`exercises[${index}].exerciseType.id`}
+                    name={`exercises[${index}].ExerciseType.id`}
                     className="workoutInputSelect"
-                    defaultValue={`${field.exerciseType?.id}`}
+                    defaultValue={`${field.ExerciseType.id}`}
                   >
                     <option value="" disabled>
                       Pick an Exercise
@@ -175,26 +187,29 @@ const NewWorkout = (props) => {
                   errorClassName="error"
                 />
                 <TextField
-                  name={`exercises[${index}].repsAssigned`}
+                  name={`exercises[${index}].reps`}
                   className="workoutInput"
                   placeholder="Reps"
-                  defaultValue={`${field?.repsAssigned}`}
+                  defaultValue={`${field?.reps}`}
                   validation={{
                     required: true,
                   }}
                   errorClassName="error"
                 />
                 <TextField
-                  name={`exercises[${index}].setsAssigned`}
+                  name={`exercises[${index}].numberOfSets`}
                   className="workoutInput"
                   placeholder="Sets"
-                  defaultValue={`${field?.setsAssigned}`}
+                  defaultValue={`${field?.numberOfSets}`}
                   validation={{
                     required: true,
                   }}
                   errorClassName="error"
                 />
-                <button type="button" onClick={() => remove(index)}>
+                <button
+                  type="button"
+                  onClick={() => handleDeletion(index, field.id)}
+                >
                   Delete
                 </button>
               </div>
@@ -205,10 +220,10 @@ const NewWorkout = (props) => {
             type="button"
             onClick={() =>
               append({
-                exerciseType: { id: '' },
+                ExerciseType: { id: '' },
                 weight: '',
-                repsAssigned: '',
-                setsAssigned: '',
+                reps: '',
+                numberOfSets: '',
               })
             }
           >

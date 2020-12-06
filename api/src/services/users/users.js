@@ -13,7 +13,6 @@ export const trainees = () => {
   return db.appUser.findMany({
     where: {
       type: 'Trainee',
-      traineeRelationship: undefined,
     },
     include: {
       traineeRelationship: true,
@@ -25,6 +24,11 @@ export const unassignedTrainees = () => {
   return db.appUser.findMany({
     where: {
       type: 'Trainee',
+      traineeRelationship: {
+        every: {
+          traineeId: null,
+        },
+      },
     },
     include: {
       traineeRelationship: true,

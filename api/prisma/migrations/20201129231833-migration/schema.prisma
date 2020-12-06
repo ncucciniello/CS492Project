@@ -5,7 +5,7 @@ generator client {
 
 datasource DS {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 model Workout {
@@ -28,16 +28,16 @@ model Exercise {
   weight          Float?
   actualWeight    Float?
   traineeComments String?
-  exerciseTypeId  Int
+  exerciseTypeId  Int?           @unique
   workout         Workout?       @relation(fields: [workoutId], references: [id])
-  ExerciseType    ExerciseType  @relation(fields: [exerciseTypeId], references: [id])
+  exerciseType    ExerciseType[]
 }
 
 model ExerciseType {
   id                  Int      @id @default(autoincrement())
   exerciseDescription String?
   exerciseName        String?
-
+  Exercise            Exercise @relation(fields: [id], references: [exerciseTypeId])
 }
 
 model AppUser {

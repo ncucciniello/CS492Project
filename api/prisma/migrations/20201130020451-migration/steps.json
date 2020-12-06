@@ -1,0 +1,78 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "ExerciseType",
+      "type": "ExerciseType",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "ExerciseType"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "ExerciseType"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[exerciseTypeId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "ExerciseType"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "exerciseType"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Exercise",
+      "field": "exerciseTypeId",
+      "arity": "Required"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "exerciseTypeId"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "DeleteField",
+      "model": "ExerciseType",
+      "field": "Exercise"
+    }
+  ]
+}

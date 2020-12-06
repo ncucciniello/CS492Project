@@ -8,7 +8,7 @@ const GET_EXERCISE_TYPES = gql`
   query getExerciseTypes {
     exerciseTypes {
       id
-      name
+      exerciseName
     }
   }
 `
@@ -34,7 +34,7 @@ const Progress = (props) => {
     if (hasExerciseTypes) {
       return data.exerciseTypes.map((exercise) => (
         <option key={exercise.id} value={exercise.id}>
-          {exercise.name}
+          {exercise.exerciseName}
         </option>
       ))
     }

@@ -1,7 +1,11 @@
 import { db } from 'src/lib/db'
 
 export const exercises = () => {
-  return db.exercise.findMany()
+  return db.exercise.findMany({
+    include: {
+      ExerciseType: true,
+    },
+  })
 }
 
 export const exerciseProgress = ({ input }) => {
@@ -11,7 +15,7 @@ export const exerciseProgress = ({ input }) => {
         id: input.exerciseTypeId,
       },
       workout: {
-        userId: input.userId,
+        userId: input.traineeId,
       },
     },
   })
@@ -30,7 +34,7 @@ export const createExercise = ({ input }) => {
       numberOfSets: input.numberOfSets,
       exerciseType: {
         connect: {
-          id: input.exerciseType,
+          id: input.exerciseTypeId,
         },
       },
     },
@@ -40,6 +44,6 @@ export const createExercise = ({ input }) => {
 export const Exercise = {
   workout: (_obj, { root }) =>
     db.exercise.findOne({ where: { id: root.id } }).workout(),
-  exerciseType: (_obj, { root }) =>
-    db.exercise.findOne({ where: { id: root.id } }).exerciseType(),
+  // exerciseType: (_obj, { root }) =>
+  //   db.exercise.findOne({ where: { id: root.id } }).exerciseType(),
 }

@@ -20,7 +20,12 @@ const ClientListItem = (props) => {
   return (
     <div className="clientListItem">
       <h2>{props.client.traineeName}</h2>
-      <button onClick={() => props.setSelectedClient(props.client.traineeId)}>
+      <button
+        onClick={() => {
+          props.setSelectedClient(props.client.traineeId)
+          props.setSelectedUserRelationship(props.client.id)
+        }}
+      >
         Select
       </button>
       <button onClick={() => onDelete(props.relationshipId)}>Remove</button>

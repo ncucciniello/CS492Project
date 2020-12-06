@@ -3,9 +3,9 @@ import { Flash, useMutation, useQuery } from '@redwoodjs/web'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 
-const GET_TRAINEES = gql`
+const GET_UNASSIGNED_TRAINEES = gql`
   query unassignedTrainees {
-    trainees {
+    unassignedTrainees {
       id
       userName
     }
@@ -24,7 +24,7 @@ const CREATE_USER_REALATION = gql`
 `
 
 const NewClient = (props) => {
-  const { loading, data } = useQuery(GET_TRAINEES, {
+  const { loading, data } = useQuery(GET_UNASSIGNED_TRAINEES, {
     fetchPolicy: 'network-only',
   })
   // console.log(data)
@@ -35,11 +35,12 @@ const NewClient = (props) => {
 
   const handleChange = () => {
     const e = document.getElementById('traineeSelecter')
+    console.log(e.options[e.selectedIndex].text)
     setSelectedTraineeName(e.options[e.selectedIndex].text)
   }
 
-  const onSubmit = (selection) => {
-    createUserRealtion({
+  const onSubmit = async (selection) => {
+    await createUserRealtion({
       variables: { input: selection },
     })
     console.log(selection)
@@ -47,7 +48,7 @@ const NewClient = (props) => {
     props.refreshClients()
   }
 
-  const hasData = data?.trainees?.length || false
+  const hasData = data?.unassignedTrainees?.length || false
 
   const displayTraineeOptions = () => {
     if (loading) {
@@ -55,7 +56,7 @@ const NewClient = (props) => {
     }
 
     if (hasData) {
-      return data.trainees.map((trainee) => (
+      return data.unassignedTrainees.map((trainee) => (
         <option key={trainee.id} value={trainee.id}>
           {trainee.userName}
         </option>
@@ -84,7 +85,10 @@ const NewClient = (props) => {
           Choose Trainee:
         </Label>
 
-        <SelectField name="traineeId" id="traineeSelecter">
+        <SelectField name="traineeId" id="traineeSelecter" defaultValue="">
+          <option value="" disabled>
+            Select a client
+          </option>
           {displayTraineeOptions()}
         </SelectField>
 

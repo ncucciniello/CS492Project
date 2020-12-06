@@ -19,6 +19,28 @@ export const GET_WORKOUT = gql`
         ExerciseType {
           exerciseName
           exerciseDescription
+          id
+        }
+      }
+    }
+  }
+`
+export const GET_WORKOUT_TRAINEE = gql`
+  query GetTraineeWorkouts($input: SearchWorkoutInput2!) {
+    traineeWorkouts(input: $input) {
+      id
+      date
+      exercises {
+        id
+        weight
+        reps
+        actualReps
+        numberOfSets
+        actualSets
+        ExerciseType {
+          exerciseName
+          exerciseDescription
+          id
         }
       }
     }
@@ -42,25 +64,57 @@ const Workout = (props) => {
     toggleLogWorkout(true)
   }
 
-  const { loading, data, refetch } = useQuery(GET_WORKOUT, {
-    variables: {
-      input: {
-        trainerId: props.currentUser,
-        traineeId: props.userSelected,
-        date: localISOTime.split('T', 1)[0],
-      },
-    },
-    onCompleted: () => {
-      if (props.currentUserType == 'Trainer') {
-        setIsTrainer(true)
-      }
-    },
-  })
+  const getWorkoutQuery = () => {
+    if (props.currentUserType == 'Trainer') {
+      console.log('in getWorkoutQuery')
+      return useQuery(GET_WORKOUT, {
+        variables: {
+          input: {
+            trainerId: props.currentTrainerId,
+            traineeId: props.userSelected,
+            date: localISOTime.split('T', 1)[0],
+          },
+        },
+        onCompleted: () => {
+          if (props.currentUserType == 'Trainer') {
+            setIsTrainer(true)
+          }
+        },
+      })
+    } else {
+      return useQuery(GET_WORKOUT_TRAINEE, {
+        variables: {
+          input: {
+            traineeId: props.userSelected,
+            date: localISOTime.split('T', 1)[0],
+          },
+        },
+      })
+    }
+  }
 
-  const hasWorkouts = data?.userWorkouts?.length || false
-  const isLogged = data?.userWorkouts[0]?.exercises[0].repsComplete !== null
+  const getHasWorkouts = () => {
+    if (props.currentUserType == 'Trainer') {
+      return data?.userWorkouts?.length || false
+    } else {
+      return data?.traineeWorkouts?.length || false
+    }
+  }
 
-  // console.log(data)
+  const getIsLogged = () => {
+    if (props.currentUserType == 'Trainer') {
+      return data?.userWorkouts[0]?.exercises[0].actualReps !== null
+    } else {
+      return data?.traineeWorkouts[0]?.exercises[0].actualReps !== null
+    }
+  }
+
+  const { loading, data, refetch } = getWorkoutQuery()
+
+  console.log('data', data)
+  const hasWorkouts = getHasWorkouts()
+  const isLogged = getIsLogged()
+
   const displayWorkout = () => {
     if (loading) {
       return <div>Loading...</div>
@@ -130,6 +184,7 @@ const Workout = (props) => {
           hasWorkouts={hasWorkouts}
           reRender={refetch}
           userSelected={props.userSelected}
+          relationshipSelected={props.relationshipSelected}
           dateSelected={localISOTime}
           setVisibility={toggleNewWorkout}
         />

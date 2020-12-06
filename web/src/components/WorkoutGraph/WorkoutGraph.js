@@ -1,5 +1,5 @@
 const WorkoutGraph = (props) => {
-  const workout = props.data.userWorkouts[0]
+  const workout = getWorkoutData(props)
 
   return (
     <div className="workoutGraph">
@@ -8,14 +8,24 @@ const WorkoutGraph = (props) => {
         <div key={exercise.id}>
           <h4>{exercise.ExerciseType.exerciseName}</h4>
           <p>Weight: {exercise.weight}</p>
-          <p>Reps: {exercise.repsAssigned}</p>
-          <p>Reps Completed: {exercise.repsComplete}</p>
-          <p>Sets: {exercise.setsAssigned}</p>
-          <p>Sets Completed: {exercise.setsComplete}</p>
+          <p>Reps: {exercise.reps}</p>
+          <p>Reps Completed: {exercise.actualReps}</p>
+          <p>Sets: {exercise.numberOfSets}</p>
+          <p>Sets Completed: {exercise.actualSets}</p>
         </div>
       ))}
     </div>
   )
 }
 
+const getWorkoutData = (props) => {
+  // return props.data.traineeWorkouts.length
+  //   ? props.data.traineeWorkouts[0]
+  //   : props.data.userWorkouts[0]
+  if (props.data.traineeWorkouts?.length != null) {
+    return props.data.traineeWorkouts[0]
+  } else {
+    return props.data.userWorkouts[0]
+  }
+}
 export default WorkoutGraph

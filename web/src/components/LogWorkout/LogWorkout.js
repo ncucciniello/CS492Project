@@ -10,19 +10,25 @@ const LOG_WORKOUT = gql`
         id
         workoutId
         weight
-        repsComplete
-        setsComplete
+        actualReps
+        actualSets
       }
     }
   }
 `
-
+const getQueryData = (props) => {
+  if (props.data.userWorkouts?.length != null) {
+    return props.data?.userWorkouts
+  } else {
+    return props.data?.traineeWorkouts
+  }
+}
 const LogWorkout = (props) => {
   const [logWorkout] = useMutation(LOG_WORKOUT)
 
   const formMethods = useForm({
     defaultValues: {
-      exercises: props.data?.userWorkouts[0].exercises,
+      exercises: getQueryData(props)[0].exercises,
     },
   })
 
@@ -32,9 +38,10 @@ const LogWorkout = (props) => {
   })
 
   const submitForm = async (data) => {
+    console.log(props)
     await logWorkout({
       variables: {
-        id: props.data.userWorkouts[0].id,
+        id: getQueryData(props)[0].id,
         input: {
           ...data,
         },
@@ -64,7 +71,7 @@ const LogWorkout = (props) => {
                   defaultValue={`${field?.id}`}
                 />
 
-                <p className="label">{field.exerciseType.name}</p>
+                <p className="label">{field.ExerciseType.exerciseName}</p>
 
                 <p className="label">{field?.weight} lbs</p>
 
