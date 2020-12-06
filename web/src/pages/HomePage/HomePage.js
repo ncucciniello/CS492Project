@@ -1,28 +1,42 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 
 const HomePage = () => {
+  const { logIn, logOut, hasRole, isAuthenticated } = useAuth()
+
   return (
-    <div>
+    <>
       <header className="home-header">
         <div className="logo">Logo goes here</div>
         <h1>
           <Link to={routes.home()}>TrainerTracker</Link>
         </h1>
       </header>
-
       <main>
-        <ul>
-          <li>
-            <Link to={routes.trainer()}>Trainer Page</Link>
-          </li>
-          <li>
-            <Link to={routes.trainee()}>Trainee Page</Link>
-          </li>
-        </ul>
+        {isAuthenticated ? (
+          <ul>
+            {hasRole('Trainer') && (
+              <li>
+                <Link to={routes.trainer()}>Trainer Page</Link>
+              </li>
+            )}
+            {hasRole('Trainee') && (
+              <li>
+                <Link to={routes.trainee()}>Trainee Page</Link>
+              </li>
+            )}
+          </ul>
+        ) : (
+          ''
+        )}
         <div className="banner">
           <h1>Welcome to</h1>
           <h1>TrainerTracker</h1>
-          <button>Sign up / Log in</button>
+          {isAuthenticated ? (
+            <button onClick={logOut}>Log out</button>
+          ) : (
+            <button onClick={logIn}>Sign up / Log in</button>
+          )}
         </div>
         <div className="info">
           <p>APP INFO GOES HERE</p>
@@ -55,11 +69,10 @@ const HomePage = () => {
           </p>
         </div>
       </main>
-
       <footer>
         <div>Footer info goes here</div>
       </footer>
-    </div>
+    </>
   )
 }
 

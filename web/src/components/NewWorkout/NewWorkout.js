@@ -61,12 +61,12 @@ const UPDATE_WORKOUT = gql`
 `
 const NewWorkout = (props) => {
   const [deletions, setDeletions] = useState([])
-  const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
-    fetchPolicy: 'network-only',
-  })
 
   const [createWorkout] = useMutation(CREATE_WORKOUT)
   const [updateWorkout] = useMutation(UPDATE_WORKOUT)
+  const { loading, data } = useQuery(GET_EXERCISE_TYPES, {
+    fetchPolicy: 'network-only',
+  })
 
   const setDefaultValues = () => {
     const myDefault = [
@@ -138,6 +138,8 @@ const NewWorkout = (props) => {
           input: data,
         },
       })
+      console.log('data', data)
+      console.log('deletions', deletions)
     }
     setDeletions([])
     props.setVisibility(false)
@@ -230,7 +232,13 @@ const NewWorkout = (props) => {
             Add Exercise
           </button>
 
-          <button type="button" onClick={() => props.setVisibility(false)}>
+          <button
+            type="button"
+            onClick={() => {
+              props.setVisibility(false)
+              setDeletions([])
+            }}
+          >
             Cancel
           </button>
 

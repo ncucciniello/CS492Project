@@ -13,10 +13,12 @@
     ]
   },
   "dependencies": {
+    "@redwoodjs/auth": "^0.21.0",
     "@redwoodjs/forms": "^0.19.3",
     "@redwoodjs/router": "^0.19.3",
     "@redwoodjs/web": "^0.19.3",
     "chart.js": "^2.9.4",
+    "netlify-identity-widget": "^1.9.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.11.1",

@@ -18,7 +18,7 @@ model Workout {
 }
 
 model Exercise {
-  id              Int            @id @default(autoincrement())
+  id              Int          @id @default(autoincrement())
   workoutId       Int?
   trainerComments String?
   reps            Int?
@@ -29,15 +29,16 @@ model Exercise {
   actualWeight    Float?
   traineeComments String?
   exerciseTypeId  Int
-  workout         Workout?       @relation(fields: [workoutId], references: [id])
-  ExerciseType    ExerciseType  @relation(fields: [exerciseTypeId], references: [id])
+  workout         Workout?     @relation(fields: [workoutId], references: [id])
+  ExerciseType    ExerciseType @relation(fields: [exerciseTypeId], references: [id])
 }
 
 model ExerciseType {
-  id                  Int      @id @default(autoincrement())
+  id                  Int     @id @default(autoincrement())
   exerciseDescription String?
   exerciseName        String?
 
+  Exercise Exercise[]
 }
 
 model AppUser {

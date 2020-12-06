@@ -1,7 +1,7 @@
 import ClientListItem from 'src/components/ClientListItem'
 import NewClient from 'src/components/NewClient/NewClient'
 import { useState } from 'react'
-import { /*useEffect,*/ useQuery } from '@redwoodjs/web'
+import { useQuery } from '@redwoodjs/web'
 
 export const GET_CLIENTS = gql`
   query ClientListQuery($trainerId: Int!) {

@@ -1,4 +1,4 @@
-import { Form, Label, HiddenField, TextField, Submit } from '@redwoodjs/forms'
+import { Form, HiddenField, TextField, Submit } from '@redwoodjs/forms'
 import { Flash, useMutation } from '@redwoodjs/web'
 import { useForm, useFieldArray } from 'react-hook-form'
 
@@ -25,6 +25,23 @@ const getQueryData = (props) => {
 }
 const LogWorkout = (props) => {
   const [logWorkout] = useMutation(LOG_WORKOUT)
+
+  // const setDefaultValues = () => {
+  //   const myDefault = [
+  //     {
+  //       exerciseType: { id: '' },
+  //       weight: '',
+  //       repsAssigned: '',
+  //       setsAssigned: '',
+  //     },
+  //   ]
+
+  //   if (props.isLogged) {
+  //     return props.data?.userWorkouts[0].exercises
+  //   } else {
+  //     return myDefault
+  //   }
+  // }
 
   const formMethods = useForm({
     defaultValues: {
@@ -59,8 +76,8 @@ const LogWorkout = (props) => {
         <Form onSubmit={submitForm} formMethods={formMethods}>
           <p className="label">Exercise Type</p>
           <p className="label">Weight</p>
-          <p className="label">Reps</p>
-          <p className="label">Sets</p>
+          <p className="label">RepsComplete</p>
+          <p className="label">SetsComplete</p>
 
           {fields.map((field, index) => {
             return (
@@ -79,6 +96,9 @@ const LogWorkout = (props) => {
                   name={`exercises[${index}].repsComplete`}
                   className="workoutInput"
                   placeholder="Reps Completed"
+                  defaultValue={
+                    field?.setsComplete == null ? '' : `${field?.repsComplete}`
+                  }
                   validation={{
                     required: true,
                   }}
@@ -89,6 +109,9 @@ const LogWorkout = (props) => {
                   name={`exercises[${index}].setsComplete`}
                   className="workoutInput"
                   placeholder="Sets Completed"
+                  defaultValue={
+                    field?.setsComplete == null ? '' : `${field?.setsComplete}`
+                  }
                   validation={{
                     required: true,
                   }}

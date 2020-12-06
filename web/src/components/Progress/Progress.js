@@ -39,7 +39,7 @@ const Progress = (props) => {
       ))
     }
 
-    return <option>There are no unassigned trainees</option>
+    return <option>There are no exercises</option>
   }
 
   return (
