@@ -1,7 +1,7 @@
 import ClientListItem from 'src/components/ClientListItem'
 import NewClient from 'src/components/NewClient/NewClient'
 import { useState } from 'react'
-import { useEffect, useQuery } from '@redwoodjs/web'
+import { useQuery } from '@redwoodjs/web'
 
 export const GET_CLIENTS = gql`
   query ClientListQuery($trainerId: Int!) {
@@ -62,7 +62,11 @@ const ClientList = (props) => {
       <h3>Client List</h3>
       <button onClick={openTraineeList}>Add Client +</button>
       {isVisible && (
-        <NewClient setVisibility={setVisibility} refreshClients={refetch} />
+        <NewClient
+          currentClient={data}
+          setVisibility={setVisibility}
+          refreshClients={refetch}
+        />
       )}
       <div className="clientList">{displayList()}</div>
     </div>

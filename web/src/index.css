@@ -18,11 +18,11 @@
 
 .user-info {
   float: right;
-  width: 150px;
+  width: 200px;
 }
 
 .info-block {
-  width: 50%;
+  width: 100%;
   display: inline-block;
 }
 

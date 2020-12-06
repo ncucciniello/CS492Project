@@ -31,9 +31,17 @@ export const schema = gql`
     exercises: [LogExerciseInput]
   }
 
+  input DeleteExerciseInput {
+    id: Int!
+  }
+
   type Mutation {
     createWorkout(input: CreateWorkoutInput!): Workout
-    updateWorkout(id: Int, input: UpdateWorkoutInput!): Workout
+    updateWorkout(
+      id: Int
+      deletions: [DeleteExerciseInput]
+      input: UpdateWorkoutInput!
+    ): Workout
     logWorkout(id: Int, input: LogWorkoutInput!): Workout
   }
 `

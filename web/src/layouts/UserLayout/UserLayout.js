@@ -1,6 +1,10 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 
 const UserLayout = ({ children }) => {
+  const { logOut, isAuthenticated, currentUser } = useAuth()
+
+  console.log(currentUser)
   return (
     <>
       <header className="home-header">
@@ -10,23 +14,19 @@ const UserLayout = ({ children }) => {
         </h1>
         <div className="user-info">
           <div className="info-block">
-            <p className="username">Username</p>
-            <p>Log Out</p>
+            {isAuthenticated && (
+              <>
+                <p className="username">
+                  Welcome, {currentUser.user_metadata.full_name}
+                </p>
+                <p className="username">Current Role: {currentUser.roles[0]}</p>
+              </>
+            )}
+            <button onClick={logOut}>Log Out</button>
           </div>
-          <div className="user-img"></div>
+          {/* <div className="user-img"></div> */}
         </div>
       </header>
-      <ul>
-        <li>
-          <Link to={routes.home()}>Home Page</Link>
-        </li>
-        <li>
-          <Link to={routes.trainer()}>Trainer Page</Link>
-        </li>
-        <li>
-          <Link to={routes.trainee()}>Trainee Page</Link>
-        </li>
-      </ul>
       <main>{children}</main>
       <footer>
         <div>Footer info goes here</div>
