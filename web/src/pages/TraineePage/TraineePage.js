@@ -3,7 +3,7 @@ import Workout from 'src/components/Workout'
 import Progress from 'src/components/Progress'
 
 const TraineePage = () => {
-  const currentUserId = 1
+  const currentUserId = 3
   const currentUserType = 'Trainee'
 
   return (
