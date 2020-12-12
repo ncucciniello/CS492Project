@@ -9,6 +9,16 @@ export const users = () => {
   })
 }
 
+export const userExists = ({ emailAddress }) => {
+  return db.appUser.findMany({
+    where: {
+      email: {
+        equals: emailAddress,
+      },
+    },
+  })
+}
+
 export const trainees = () => {
   return db.appUser.findMany({
     where: {

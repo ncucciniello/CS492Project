@@ -66,7 +66,7 @@ const Workout = (props) => {
 
   const getWorkoutQuery = () => {
     if (props.currentUserType == 'Trainer') {
-      console.log('in getWorkoutQuery')
+
       return useQuery(GET_WORKOUT, {
         variables: {
           input: {
@@ -111,7 +111,7 @@ const Workout = (props) => {
 
   const { loading, data, refetch } = getWorkoutQuery()
 
-  console.log('data', data)
+
   const hasWorkouts = getHasWorkouts()
   const isLogged = getIsLogged()
 

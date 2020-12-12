@@ -14,7 +14,6 @@ const ClientListItem = (props) => {
   const onDelete = (selection) => {
     deleteRelationship({ variables: { id: selection } })
     props.refreshClients()
-    console.log(selection)
   }
 
   return (

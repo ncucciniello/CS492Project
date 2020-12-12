@@ -55,7 +55,7 @@ const LogWorkout = (props) => {
   })
 
   const submitForm = async (data) => {
-    console.log(props)
+
     await logWorkout({
       variables: {
         id: getQueryData(props)[0].id,

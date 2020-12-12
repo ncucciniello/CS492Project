@@ -27,7 +27,7 @@ const NewClient = (props) => {
   const { loading, data } = useQuery(GET_UNASSIGNED_TRAINEES, {
     fetchPolicy: 'network-only',
   })
-  // console.log(data)
+
   const [createUserRealtion] = useMutation(CREATE_USER_REALATION)
   const [selectedTraineeName, setSelectedTraineeName] = useState('')
 
@@ -35,7 +35,7 @@ const NewClient = (props) => {
 
   const handleChange = () => {
     const e = document.getElementById('traineeSelecter')
-    console.log(e.options[e.selectedIndex].text)
+    // console.log(e.options[e.selectedIndex].text)
     setSelectedTraineeName(e.options[e.selectedIndex].text)
   }
 
@@ -43,7 +43,7 @@ const NewClient = (props) => {
     await createUserRealtion({
       variables: { input: selection },
     })
-    console.log(selection)
+
     props.setVisibility(false)
     props.refreshClients()
   }

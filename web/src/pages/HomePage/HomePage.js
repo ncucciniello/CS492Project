@@ -1,8 +1,86 @@
-import { Link, routes } from '@redwoodjs/router'
+import { Link, routes, navigate } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
+import { useQuery, useMutation } from '@redwoodjs/web'
+import { useState } from 'react'
+
+export const FIND_USER = gql`
+  query FindUserQuery($emailAddress: String!) {
+    userExists(emailAddress: $emailAddress) {
+      id
+      email
+      type
+    }
+  }
+`
+
+const CREATE_USER = gql`
+  mutation createAppUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+      email
+      userName
+      type
+    }
+  }
+`
 
 const HomePage = () => {
-  const { logIn, logOut, hasRole, isAuthenticated } = useAuth()
+  const [displayPopUp, seDisplayPopUp] = useState(false)
+
+  const { logIn, logOut, hasRole, isAuthenticated, currentUser } = useAuth()
+  const [createUser] = useMutation(CREATE_USER)
+  let userTypeSelected = ''
+
+  const popUp = () => {
+    return (
+      <div>
+        <p>Please Select a role: </p>
+        <button onClick={() => (userTypeSelected = 'Trainer')}>Trainer</button>
+        <button onClick={() => (userTypeSelected = 'Trainee')}>Trainee</button>
+        <button
+          onClick={() => {
+            console.log(userTypeSelected)
+            seDisplayPopUp(false)
+            // Set the role in Netlify Identity
+            createUser({
+              variables: {
+                input: {
+                  email: currentUser.email,
+                  userName: currentUser.user_metadata.full_name,
+                  type: userTypeSelected,
+                },
+              },
+            })
+          }}
+        >
+          Submit
+        </button>
+      </div>
+    )
+  }
+
+  const redirectUser = () => {
+    const currentUserType = data.userExists[0].type
+    console.log('sending from redirectUser()', data.userExists[0].type)
+
+    currentUserType == 'Trainer'
+      ? navigate(routes.trainer())
+      : navigate(routes.trainee())
+  }
+
+  const { data } = useQuery(FIND_USER, {
+    variables: { emailAddress: currentUser?.email },
+    skip: !isAuthenticated,
+    onCompleted: (data) => {
+      if (data.userExists.length < 1) {
+        console.log('users is not in db yet')
+        seDisplayPopUp(true)
+      } else {
+        console.log(data.userExists[0])
+        redirectUser()
+        // <Redirect to={}>
+      }
+    },
+  })
 
   return (
     <>
@@ -33,10 +111,18 @@ const HomePage = () => {
           <h1>Welcome to</h1>
           <h1>TrainerTracker</h1>
           {isAuthenticated ? (
-            <button onClick={logOut}>Log out</button>
+            <button
+              onClick={() => {
+                logOut()
+                seDisplayPopUp(false)
+              }}
+            >
+              Log out
+            </button>
           ) : (
             <button onClick={logIn}>Sign up / Log in</button>
           )}
+          {displayPopUp && popUp()}
         </div>
         <div className="info">
           <p>APP INFO GOES HERE</p>

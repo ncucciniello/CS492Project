@@ -119,7 +119,7 @@ const NewWorkout = (props) => {
   }
 
   const submitForm = async (data) => {
-    console.log(props.relationshipSelected)
+
     if (!props.hasWorkouts) {
       await createWorkout({
         variables: {
@@ -138,8 +138,7 @@ const NewWorkout = (props) => {
           input: data,
         },
       })
-      console.log('data', data)
-      console.log('deletions', deletions)
+
     }
     setDeletions([])
     props.setVisibility(false)

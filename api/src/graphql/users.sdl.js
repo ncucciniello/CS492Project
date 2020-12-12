@@ -12,12 +12,15 @@ export const schema = gql`
     users: [AppUser!]!
     trainees: [AppUser]
     unassignedTrainees: [AppUser]
+    userExists(emailAddress: String!): [AppUser!]!
   }
-
+  input userSearchInput {
+    emailAddress: String!
+  }
   input CreateUserInput {
     email: String!
     userName: String
-    type: String!
+    type: String
   }
 
   input UpdateUserInput {

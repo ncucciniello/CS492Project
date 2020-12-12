@@ -29,13 +29,13 @@ const WorkoutGraph = (props) => {
       labels: getXarray(),
       datasets: [
         {
-          label: 'Sets Assigned',
+          label: 'Total Reps Assigned',
           data: getSetsAssigned(),
           backgroundColor: 'rgba(255,0,0,0.6)',
           borderWidth: 4,
         },
         {
-          label: 'Sets Hit',
+          label: 'Total Reps Hit',
           data: getSetsHit(),
           backgroundColor: 'rgba(60,179,113,0.6',
           borderWidth: 4,
