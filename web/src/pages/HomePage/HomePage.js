@@ -26,16 +26,23 @@ const CREATE_USER = gql`
 const HomePage = () => {
   const [displayPopUp, seDisplayPopUp] = useState(false)
 
+  const [userTypeSelected, setUserTypeSelected] = useState('')
+
   const { logIn, logOut, hasRole, isAuthenticated, currentUser } = useAuth()
-  const [createUser] = useMutation(CREATE_USER)
-  let userTypeSelected = ''
+  const [createUser] = useMutation(CREATE_USER, {
+    onCompleted: () => {
+      userTypeSelected == 'Trainer'
+        ? navigate(routes.trainer())
+        : navigate(routes.trainee())
+    },
+  })
 
   const popUp = () => {
     return (
       <div>
         <p>Please Select a role: </p>
-        <button onClick={() => (userTypeSelected = 'Trainer')}>Trainer</button>
-        <button onClick={() => (userTypeSelected = 'Trainee')}>Trainee</button>
+        <button onClick={() => setUserTypeSelected('Trainer')}>Trainer</button>
+        <button onClick={() => setUserTypeSelected('Trainee')}>Trainee</button>
         <button
           onClick={() => {
             console.log(userTypeSelected)
@@ -77,7 +84,6 @@ const HomePage = () => {
       } else {
         console.log(data.userExists[0])
         redirectUser()
-        // <Redirect to={}>
       }
     },
   })
