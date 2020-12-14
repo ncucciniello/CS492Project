@@ -5,10 +5,27 @@ export const workouts = () => {
   return db.workout.findMany()
 }
 
+export const traineeWorkouts = ({ input }) => {
+  return db.workout.findMany({
+    where: {
+      UserRelationship: {
+        traineeId: input.traineeId,
+      },
+      date: {
+        gte: new Date(new Date(input.date)).toISOString(),
+        lt: new Date(+new Date(input.date) + 86400000).toISOString(),
+      },
+    },
+  })
+}
+
 export const userWorkouts = ({ input }) => {
   return db.workout.findMany({
     where: {
-      userId: input.userId,
+      UserRelationship: {
+        traineeId: input.traineeId,
+        trainerId: input.trainerId,
+      },
       date: {
         gte: new Date(new Date(input.date)).toISOString(),
         lt: new Date(+new Date(input.date) + 86400000).toISOString(),
@@ -21,20 +38,20 @@ export const createWorkout = ({ input }) => {
   requireAuth({ role: 'Trainer' })
   return db.workout.create({
     data: {
-      user: {
+      UserRelationship: {
         connect: {
-          id: input.userId,
+          id: input.userRelationshipId,
         },
       },
       date: input.date,
       exercises: {
-        create: input.exercises.map((exercise) => ({
-          weight: parseInt(exercise.weight),
-          repsAssigned: parseInt(exercise.repsAssigned),
-          setsAssigned: parseInt(exercise.setsAssigned),
-          exerciseType: {
+        create: input.exercises.map((exercises) => ({
+          weight: parseInt(exercises.weight),
+          reps: parseInt(exercises.reps),
+          numberOfSets: parseInt(exercises.numberOfSets),
+          ExerciseType: {
             connect: {
-              id: parseInt(exercise.exerciseType.id),
+              id: parseInt(exercises.ExerciseType.id),
             },
           },
         })),
@@ -53,21 +70,21 @@ export const updateWorkout = ({ id, deletions, input }) => {
           where: { id: parseInt(exercise.id) || undefined || null },
           create: {
             weight: parseInt(exercise.weight),
-            repsAssigned: parseInt(exercise.repsAssigned),
-            setsAssigned: parseInt(exercise.setsAssigned),
-            exerciseType: {
+            reps: parseInt(exercise.reps),
+            numberOfSets: parseInt(exercise.numberOfSets),
+            ExerciseType: {
               connect: {
-                id: parseInt(exercise.exerciseType.id),
+                id: parseInt(exercise.ExerciseType.id),
               },
             },
           },
           update: {
             weight: parseInt(exercise.weight),
-            repsAssigned: parseInt(exercise.repsAssigned),
-            setsAssigned: parseInt(exercise.setsAssigned),
-            exerciseType: {
+            reps: parseInt(exercise.reps),
+            numberOfSets: parseInt(exercise.numberOfSets),
+            ExerciseType: {
               connect: {
-                id: parseInt(exercise.exerciseType.id),
+                id: parseInt(exercise.ExerciseType.id),
               },
             },
           },
@@ -86,8 +103,8 @@ export const logWorkout = ({ id, input }) => {
       exercises: {
         update: input.exercises.map((exercise) => ({
           data: {
-            repsComplete: parseInt(exercise.repsComplete),
-            setsComplete: parseInt(exercise.setsComplete),
+            actualReps: parseInt(exercise.repsComplete),
+            actualSets: parseInt(exercise.setsComplete),
           },
           where: { id: parseInt(exercise.id) },
         })),
@@ -100,5 +117,5 @@ export const Workout = {
   exercises: (_obj, { root }) =>
     db.workout
       .findOne({ where: { id: root.id } })
-      .exercises({ include: { exerciseType: true } }),
+      .exercises({ include: { ExerciseType: true } }),
 }

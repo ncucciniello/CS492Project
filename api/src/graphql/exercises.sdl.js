@@ -2,18 +2,19 @@ export const schema = gql`
   type Exercise {
     id: Int!
     workoutId: Int!
-    weight: Int!
-    repsAssigned: Int!
-    repsComplete: Int
-    setsAssigned: Int!
-    setsComplete: Int
+    reps: Int!
+    actualReps: Int
+    numberOfSets: Int!
+    actualSets: Int
+    weight: Int
+    trainerComments: String!
     exerciseTypeId: Int!
-    workout: Workout
-    exerciseType: ExerciseType!
+    workout: Workout!
+    ExerciseType: ExerciseType
   }
 
   input SearchProgressInput {
-    userId: Int!
+    traineeId: Int!
     exerciseTypeId: Int!
   }
 
@@ -23,11 +24,11 @@ export const schema = gql`
   }
 
   input CreateExerciseInput {
-    workoutId: Int!
-    weight: Int!
-    repsAssigned: Int!
-    setsAssigned: Int!
-    exerciseType: Int!
+    workoutId: String!
+    weight: String!
+    reps: String!
+    numberOfSets: String!
+    exerciseTypeId: String!
   }
 
   input CreateExerciseTypeIdInput {
@@ -35,11 +36,11 @@ export const schema = gql`
   }
 
   input CreateNewExerciseInput {
-    id: String
+    id: String!
     weight: String!
-    repsAssigned: String!
-    setsAssigned: String!
-    exerciseType: CreateExerciseTypeIdInput!
+    reps: String!
+    numberOfSets: String!
+    ExerciseType: CreateExerciseTypeIdInput!
   }
 
   input UpdateExerciseTypeInput {
@@ -49,9 +50,9 @@ export const schema = gql`
   input UpdateAssignedExerciseInput {
     id: String!
     weight: String
-    repsAssigned: String
-    setsAssigned: String
-    exerciseType: UpdateExerciseTypeInput
+    reps: String
+    numberOfSets: String
+    ExerciseType: UpdateExerciseTypeInput
   }
 
   input LogExerciseInput {

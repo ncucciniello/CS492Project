@@ -1,33 +1,33 @@
 import { useMutation } from '@redwoodjs/web'
 
-const UPDATE_TRAINEE = gql`
-  mutation UpdateUser($id: Int, $input: UpdateUserInput!) {
-    updateUser(id: $id, input: $input) {
+const DELETE_TRAINEE = gql`
+  mutation deleteUserRelation($id: Int) {
+    deleteUserRelation(id: $id) {
       id
     }
   }
 `
 
 const ClientListItem = (props) => {
-  const [updateUser] = useMutation(UPDATE_TRAINEE)
+  const [deleteRelationship] = useMutation(DELETE_TRAINEE)
 
-  const onSubmit = (selection) => {
-    updateUser({
-      variables: {
-        id: parseInt(selection),
-        input: { trainer: null },
-      },
-    })
+  const onDelete = (selection) => {
+    deleteRelationship({ variables: { id: selection } })
     props.refreshClients()
   }
 
   return (
     <div className="clientListItem">
-      <h2>{props.user.name}</h2>
-      <button onClick={() => props.setSelectedClient(props.user.id)}>
+      <h2>{props.client.traineeName}</h2>
+      <button
+        onClick={() => {
+          props.setSelectedClient(props.client.traineeId)
+          props.setSelectedUserRelationship(props.client.id)
+        }}
+      >
         Select
       </button>
-      <button onClick={() => onSubmit(props.user.id)}>Remove</button>
+      <button onClick={() => onDelete(props.relationshipId)}>Remove</button>
     </div>
   )
 }

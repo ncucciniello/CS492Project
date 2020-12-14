@@ -1,24 +1,34 @@
 export const schema = gql`
   type Workout {
     id: Int!
-    userId: Int!
+    relationshipId: Int!
     date: DateTime
-    user: User!
+    userRelationship: UserRelationship!
     exercises: [Exercise]
   }
 
   input SearchWorkoutInput {
-    userId: Int!
+    traineeId: Int!
+    trainerId: Int!
     date: String!
   }
 
   type Query {
     workouts: [Workout!]!
     userWorkouts(input: SearchWorkoutInput!): [Workout!]!
+    traineeWorkouts(input: SearchWorkoutInput2!): [Workout!]!
   }
 
+  input SearchWorkoutInput3 {
+    traineeId: Int!
+    exerciseTypeId: Int!
+  }
+  input SearchWorkoutInput2 {
+    traineeId: Int!
+    date: String!
+  }
   input CreateWorkoutInput {
-    userId: Int!
+    userRelationshipId: Int!
     date: DateTime
     exercises: [CreateNewExerciseInput]
   }

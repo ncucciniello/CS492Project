@@ -4,7 +4,6 @@ import { useAuth } from '@redwoodjs/auth'
 const UserLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
 
-  console.log(currentUser)
   return (
     <>
       <header className="home-header">
@@ -20,6 +19,10 @@ const UserLayout = ({ children }) => {
                   Welcome, {currentUser.user_metadata.full_name}
                 </p>
                 <p className="username">Current Role: {currentUser.roles[0]}</p>
+                <p className="emailAddress">
+                  {' '}
+                  Email Address: {currentUser.email}
+                </p>
               </>
             )}
             <button onClick={logOut}>Log Out</button>

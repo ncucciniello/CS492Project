@@ -1,0 +1,199 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "trainerRelationship",
+      "type": "UserRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "trainerRelationship"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "trainerRelationship"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"trainer\""
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "traineeRelationship",
+      "type": "UserRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "traineeRelationship"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "traineeRelationship"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"trainee\""
+    },
+    {
+      "tag": "DeleteField",
+      "model": "AppUser",
+      "field": "UserRelationship"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "trainerUser",
+      "type": "AppUser",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "trainerUser"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "trainerUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"trainer\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "trainerUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[trainerId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "trainerUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "traineeUser",
+      "type": "AppUser",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "traineeUser"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "traineeUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"trainee\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "traineeUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[traineeId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "traineeUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserRelationship",
+      "field": "AppUser"
+    }
+  ]
+}

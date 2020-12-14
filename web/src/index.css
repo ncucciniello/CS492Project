@@ -101,10 +101,10 @@
 
 .workoutGraph {
   width: 74%;
-  height: 250px;
+  min-height: 250px;
   border: 2px solid black;
   display: inline-block;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   /* margin: 50px auto; */
 }
 

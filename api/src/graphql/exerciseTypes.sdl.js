@@ -1,8 +1,8 @@
 export const schema = gql`
   type ExerciseType {
     id: Int!
-    name: String!
-    description: String
+    exerciseName: String!
+    exerciseDescription: String!
   }
 
   type Query {
@@ -10,13 +10,13 @@ export const schema = gql`
   }
 
   input CreateExerciseTypeInput {
-    name: String!
-    description: String
+    exerciseName: String!
+    exerciseDescription: String
   }
 
   input UpdateExerciseTypeInput {
-    name: String
-    description: String
+    exerciseName: String
+    exerciseDescription: String
   }
 
   type Mutation {

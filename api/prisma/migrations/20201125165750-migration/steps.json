@@ -1,0 +1,77 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "userRelationship",
+      "type": "UserRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AppUser",
+      "field": "trainerRelationship",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AppUser",
+      "field": "traineeRelationship",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "AppUser",
+      "type": "AppUser",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[appUserId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "appUserId",
+      "type": "Int",
+      "arity": "Optional"
+    }
+  ]
+}
