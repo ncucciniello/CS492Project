@@ -4,10 +4,13 @@ export const userRelationships = () => {
   return db.userRelationship.findMany()
 }
 
-export const clients = ({ trainerIds }) => {
+export const clients = ({ trainerId }) => {
+  console.log(trainerId)
   return db.userRelationship.findMany({
     where: {
-      trainerId: trainerIds,
+      trainerId: {
+        equals: trainerId,
+      },
     },
   })
 }

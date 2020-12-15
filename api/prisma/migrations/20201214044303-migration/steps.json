@@ -1,0 +1,12 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "ExerciseType",
+      "field": "Exercise",
+      "type": "Exercise",
+      "arity": "List"
+    }
+  ]
+}

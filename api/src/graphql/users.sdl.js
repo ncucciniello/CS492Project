@@ -14,9 +14,7 @@ export const schema = gql`
     unassignedTrainees: [AppUser]
     userExists(emailAddress: String!): [AppUser!]!
   }
-  input userSearchInput {
-    emailAddress: String!
-  }
+
   input CreateUserInput {
     email: String!
     userName: String

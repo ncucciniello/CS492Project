@@ -24,7 +24,7 @@ const CREATE_USER = gql`
 `
 
 const HomePage = () => {
-  const [displayPopUp, seDisplayPopUp] = useState(false)
+  const [displayPopUp, setDisplayPopUp] = useState(false)
 
   const [userTypeSelected, setUserTypeSelected] = useState('')
 
@@ -46,7 +46,7 @@ const HomePage = () => {
         <button
           onClick={() => {
             console.log(userTypeSelected)
-            seDisplayPopUp(false)
+            setDisplayPopUp(false)
             // Set the role in Netlify Identity
             createUser({
               variables: {
@@ -80,7 +80,7 @@ const HomePage = () => {
     onCompleted: (data) => {
       if (data.userExists.length < 1) {
         console.log('users is not in db yet')
-        seDisplayPopUp(true)
+        setDisplayPopUp(true)
       } else {
         console.log(data.userExists[0])
         redirectUser()
@@ -120,7 +120,7 @@ const HomePage = () => {
             <button
               onClick={() => {
                 logOut()
-                seDisplayPopUp(false)
+                setDisplayPopUp(false)
               }}
             >
               Log out

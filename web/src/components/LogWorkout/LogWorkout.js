@@ -55,7 +55,6 @@ const LogWorkout = (props) => {
   })
 
   const submitForm = async (data) => {
-
     await logWorkout({
       variables: {
         id: getQueryData(props)[0].id,
@@ -88,7 +87,7 @@ const LogWorkout = (props) => {
                   defaultValue={`${field?.id}`}
                 />
 
-                <p className="label">{field.ExerciseType.exerciseName}</p>
+                <p className="label">{field.ExerciseType?.exerciseName}</p>
 
                 <p className="label">{field?.weight} lbs</p>
 
