@@ -20,7 +20,7 @@ const TraineePage = () => {
   const { currentUser } = useAuth()
   const [currentUserId, setCurrentUserId] = useState(0)
   const [currentUserType, setCurrentUserType] = useState('')
-  const [currentTrainerId, setCurrentTrainerId] = useState(54321)
+  // const [currentTrainerId, setCurrentTrainerId] = useState(54321)
 
   const { data } = useQuery(FIND_USER, {
     variables: { emailAddress: currentUser.email },
@@ -37,7 +37,7 @@ const TraineePage = () => {
       <Workout
         currentUserType={currentUserType}
         userSelected={currentUserId}
-        currentTrainerId={currentTrainerId}
+        // currentTrainerId={currentTrainerId}
       />
       <Progress userSelected={currentUserId} />
     </UserLayout>
