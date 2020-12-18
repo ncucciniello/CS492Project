@@ -48,25 +48,44 @@ export const GET_WORKOUT_TRAINEE = gql`
 `
 
 const Workout = (props) => {
-  const [newWorkout, toggleNewWorkout] = useState(false)
-  const [logWorkout, toggleLogWorkout] = useState(false)
+  const [newWorkout, setNewWorkout] = useState(false)
+  const [logWorkout, setLogWorkout] = useState(false)
   const [isTrainer, setIsTrainer] = useState(false)
-
   const [dateSelected, setDateSelected] = useState(new Date())
+
   const tzOffset = new Date().getTimezoneOffset() * 60000
   let localISOTime = new Date(dateSelected - tzOffset).toISOString()
 
-  const openWorkoutForm = () => {
-    toggleNewWorkout(true)
-  }
+  // let params = {
+  //   Trainee: {
+  //     method: GET_WORKOUT_TRAINEE,
+  //     variables: {
+  //       traineeId: props.userSelected,
+  //       date: localISOTime.split('T', 1)[0],
+  //     },
+  //   },
+  //   Trainer: {
+  //     method: GET_WORKOUT,
+  //     variables: {
+  //       trainerId: props.currentTrainerId,
+  //       traineeId: props.userSelected,
+  //       date: localISOTime.split('T', 1)[0],
+  //     },
+  //   },
+  // }[props.currentUserType]
 
-  const openLogWorkoutForm = () => {
-    toggleLogWorkout(true)
-  }
+  // // console.log(params)
+  // const { loading, data, refetch } = useQuery(params.method, {
+  //   variables: params.variables,
+  //   onCompleted: () => {
+  //     if (props.currentUserType == 'Trainer') {
+  //       setIsTrainer(true)
+  //     }
+  //   },
+  // })
 
   const getWorkoutQuery = () => {
     if (props.currentUserType == 'Trainer') {
-
       return useQuery(GET_WORKOUT, {
         variables: {
           input: {
@@ -93,6 +112,8 @@ const Workout = (props) => {
     }
   }
 
+  const { loading, data, refetch } = getWorkoutQuery()
+
   const getHasWorkouts = () => {
     if (props.currentUserType == 'Trainer') {
       return data?.userWorkouts?.length || false
@@ -109,11 +130,14 @@ const Workout = (props) => {
     }
   }
 
-  const { loading, data, refetch } = getWorkoutQuery()
-
-
   const hasWorkouts = getHasWorkouts()
   const isLogged = getIsLogged()
+
+  const openForm = () => {
+    props.currentUserType == 'Trainer'
+      ? setNewWorkout(true)
+      : setLogWorkout(true)
+  }
 
   const displayWorkout = () => {
     if (loading) {
@@ -147,7 +171,7 @@ const Workout = (props) => {
         <button
           onClick={() => {
             handleDateChange(0)
-            isTrainer ? toggleNewWorkout(false) : toggleLogWorkout(false)
+            isTrainer ? setNewWorkout(false) : setLogWorkout(false)
           }}
         >
           Previous Day
@@ -156,7 +180,7 @@ const Workout = (props) => {
         <button
           onClick={() => {
             handleDateChange(1)
-            isTrainer ? toggleNewWorkout(false) : toggleLogWorkout(false)
+            isTrainer ? setNewWorkout(false) : setLogWorkout(false)
           }}
         >
           Next Day
@@ -166,10 +190,10 @@ const Workout = (props) => {
 
       {isTrainer && (
         <div className="workoutSidebar">
-          <button disabled={hasWorkouts} onClick={openWorkoutForm}>
+          <button disabled={hasWorkouts} onClick={openForm}>
             Add Workout
           </button>
-          <button disabled={!hasWorkouts} onClick={openWorkoutForm}>
+          <button disabled={!hasWorkouts} onClick={openForm}>
             Edit Workout
           </button>
         </div>
@@ -177,16 +201,10 @@ const Workout = (props) => {
 
       {!isTrainer && (
         <div className="workoutSidebar">
-          <button
-            disabled={!hasWorkouts || isLogged}
-            onClick={openLogWorkoutForm}
-          >
+          <button disabled={!hasWorkouts || isLogged} onClick={openForm}>
             Log Workout
           </button>
-          <button
-            disabled={!hasWorkouts || !isLogged}
-            onClick={openLogWorkoutForm}
-          >
+          <button disabled={!hasWorkouts || !isLogged} onClick={openForm}>
             Edit Logged Workout
           </button>
         </div>
@@ -200,7 +218,7 @@ const Workout = (props) => {
           userSelected={props.userSelected}
           relationshipSelected={props.relationshipSelected}
           dateSelected={localISOTime}
-          setVisibility={toggleNewWorkout}
+          setVisibility={setNewWorkout}
         />
       )}
 
@@ -212,7 +230,7 @@ const Workout = (props) => {
           reRender={refetch}
           userSelected={props.userSelected}
           dateSelected={localISOTime}
-          setVisibility={toggleLogWorkout}
+          setVisibility={setLogWorkout}
         />
       )}
     </div>

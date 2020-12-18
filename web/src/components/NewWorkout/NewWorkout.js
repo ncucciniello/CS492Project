@@ -119,7 +119,6 @@ const NewWorkout = (props) => {
   }
 
   const submitForm = async (data) => {
-
     if (!props.hasWorkouts) {
       await createWorkout({
         variables: {
@@ -138,7 +137,6 @@ const NewWorkout = (props) => {
           input: data,
         },
       })
-
     }
     setDeletions([])
     props.setVisibility(false)

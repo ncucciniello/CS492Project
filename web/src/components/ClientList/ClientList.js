@@ -19,11 +19,10 @@ const ClientList = (props) => {
   const openTraineeList = () => {
     setVisibility(true)
   }
-  console.log('in ClientLIst', props.currentTrainerId)
+
   const { refetch, loading, empty, data } = useQuery(GET_CLIENTS, {
     variables: { trainerId: props.currentTrainerId },
     onCompleted: (data) => {
-      console.log(data)
       if (data.clients.length > 0) {
         props.setSelectedClient(data?.clients[0].traineeId)
         props.setSelectedUserRelationship(data?.clients[0].id)

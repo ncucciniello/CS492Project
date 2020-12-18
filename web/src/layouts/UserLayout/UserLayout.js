@@ -19,15 +19,10 @@ const UserLayout = ({ children }) => {
                   Welcome, {currentUser.user_metadata.full_name}
                 </p>
                 <p className="username">Current Role: {currentUser.roles[0]}</p>
-                <p className="emailAddress">
-                  {' '}
-                  Email Address: {currentUser.email}
-                </p>
               </>
             )}
             <button onClick={logOut}>Log Out</button>
           </div>
-          {/* <div className="user-img"></div> */}
         </div>
       </header>
       <main>{children}</main>

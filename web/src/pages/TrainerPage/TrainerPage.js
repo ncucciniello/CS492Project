@@ -18,7 +18,6 @@ const FIND_USER = gql`
 `
 const TrainerPage = () => {
   const { currentUser } = useAuth()
-  console.log(currentUser.email)
   const [currentTrainerId, setCurrentTrainerId] = useState(54321)
   const [currentTrainerName, setCurrentTrainerName] = useState('')
   const [currentUserType, setCurrentUserType] = useState('')
@@ -28,20 +27,14 @@ const TrainerPage = () => {
 
   const { data } = useQuery(FIND_USER, {
     variables: { emailAddress: currentUser.email },
-    onCompleted: (data) => {
-      const user = data.userExists[0]
-      console.log('user', user)
-      setCurrentTrainerId(user.id)
-      setCurrentTrainerName(user.userName)
-      setCurrentUserType(user.type)
-    },
+    onCompleted: () => setUser(data.userExists[0]),
   })
 
-  // const [currentTrainerId] = useState(54321)
-  // const [currentTrainerName] = useState('Liam Onbashian')
-  // const currentUserType = 'Trainer'
-  // const [selectedClient, setSelectedClient] = useState(0)
-  // const [selectedUserRelationship, setSelectedUserRelationship] = useState(0)
+  const setUser = (user) => {
+    setCurrentTrainerId(user.id)
+    setCurrentTrainerName(user.userName)
+    setCurrentUserType(user.type)
+  }
 
   return (
     <UserLayout>
@@ -51,7 +44,7 @@ const TrainerPage = () => {
         setSelectedClient={setSelectedClient}
         setSelectedUserRelationship={setSelectedUserRelationship}
       />
-      <h2>Displaying info for client id: {selectedClient}</h2>
+      {/* <h2>Displaying info for client id: {selectedClient}</h2> */}
       <Workout
         currentTrainerId={currentTrainerId}
         currentUserType={currentUserType}

@@ -20,13 +20,12 @@ const TraineePage = () => {
   const { currentUser } = useAuth()
   const [currentUserId, setCurrentUserId] = useState(0)
   const [currentUserType, setCurrentUserType] = useState('')
-  // const [currentTrainerId, setCurrentTrainerId] = useState(54321)
 
   const { data } = useQuery(FIND_USER, {
     variables: { emailAddress: currentUser.email },
-    onCompleted: (data) => {
+    onCompleted: () => {
       const user = data.userExists[0]
-      console.log('user', user)
+      // console.log('user', user)
       setCurrentUserId(user.id)
       setCurrentUserType(user.type)
     },
@@ -34,11 +33,7 @@ const TraineePage = () => {
 
   return (
     <UserLayout>
-      <Workout
-        currentUserType={currentUserType}
-        userSelected={currentUserId}
-        // currentTrainerId={currentTrainerId}
-      />
+      <Workout currentUserType={currentUserType} userSelected={currentUserId} />
       <Progress userSelected={currentUserId} />
     </UserLayout>
   )

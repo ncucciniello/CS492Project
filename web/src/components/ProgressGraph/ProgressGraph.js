@@ -5,17 +5,9 @@ import { useState } from 'react'
 export const GET_PROGRESS = gql`
   query GetExerciseProgress($input: SearchProgressInput!) {
     exerciseProgress(input: $input) {
-      id
-      weight
       actualReps
       actualSets
-      ExerciseType {
-        id
-        exerciseName
-      }
       workout {
-        id
-        relationshipId
         date
       }
     }
@@ -23,6 +15,9 @@ export const GET_PROGRESS = gql`
 `
 
 const ProgressGraph = (props) => {
+  const [chartData, setChartData] = useState({})
+  const [displayChart, setDisplayChart] = useState(false)
+
   const { data } = useQuery(GET_PROGRESS, {
     variables: {
       input: {
@@ -31,88 +26,72 @@ const ProgressGraph = (props) => {
       },
     },
     onCompleted: () => {
-      chart()
+      chart(createProgressObjectList(data))
     },
   })
 
   const hasProgress = data?.exerciseProgress?.length || false
 
-  const [chartData, setChartData] = useState({})
-
-  const getAllDates = () => {
-    var xArray = []
-    data?.exerciseProgress.map((exercise) =>
-      xArray.push(exercise.workout.date.split('T', 1)[0])
+  const createProgressObjectList = (data) => {
+    let progressList = []
+    data.exerciseProgress.map((ex) =>
+      progressList.push({
+        totalReps: ex.actualReps * ex.actualSets,
+        date: ex.workout.date.split('T', 1)[0],
+      })
     )
-    return xArray
+    progressList.sort((a, b) => (a.date > b.date ? 1 : -1))
+    return progressList
   }
 
-  const getTotalReps = () => {
-    var yArray = []
-
-    data?.exerciseProgress.map(
-      (exercise) =>
-        yArray.push(exercise.actualReps * exercise.actualSets * exercise.weight)
-      //yArray.push(exercise.repsComplete * exerciseProgress.workou)
-    )
-    return yArray
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
   }
 
-  // console.log(getAllDates())
-  // console.log(getTotalReps())
-  // console.log(
-  //   'exerciseProgress',
-  //   data?.exerciseProgress.map((ex) => ex.weight)
-  // )
+  const chart = (progObjectArray) => {
+    const repList = []
+    const dateList = []
 
-  const chart = () => {
+    progObjectArray.map((ex) => {
+      repList.push(ex.totalReps)
+      dateList.push(ex.date)
+    })
+
+    if (repList.length > 1) {
+      setDisplayChart(true)
+    } else {
+      setDisplayChart(false)
+    }
+
     setChartData({
-      labels: getAllDates(),
-
+      labels: dateList,
       datasets: [
         {
           label: 'Sets Hit',
-          data: getTotalReps(),
-          //added code
-          options: {
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                  },
-                },
-              ],
-            },
-          },
-
-          //finished code
-          //data: [5, 2, 0, 7, 5],
-          backgroundColor: 'rgba(60,179,113,0.6',
+          fill: false,
+          data: repList,
+          borderColor: 'rgba(60,179,113,0.6',
           borderWidth: 4,
         },
       ],
     })
   }
 
-  /* useEffect(() => {
-    chart()
-  }, [])
-  */
-
   const displayProgress = () => {
     if (props.loading) {
       return <p>Loading...</p>
     }
 
-    if (hasProgress) {
-      // return data.exerciseProgress.map((exercise) => (
-      //   <div key={exercise.id}>
-      //     Date: {exercise.workout.date.split('T', 1)[0]} Total Reps:{' '}
-      //     {exercise.actualReps * exercise.actualSets}
-      //   </div>
-      // ))
-      return <Line data={chartData} />
+    if (hasProgress && displayChart) {
+      return <Line data={chartData} options={options} />
     }
 
     return <p>There is no progress to display</p>
