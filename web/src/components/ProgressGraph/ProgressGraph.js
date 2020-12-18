@@ -34,6 +34,10 @@ const ProgressGraph = (props) => {
   const hasProgress = data?.exerciseProgress?.length || false
 
   const getOneRepMax = (reps, weight) => {
+    if (weight == 0) {
+      return reps
+    }
+
     if (reps == 1) {
       return Math.round(weight * 1)
     } else if (reps == 2) {
@@ -75,6 +79,7 @@ const ProgressGraph = (props) => {
       progressList.push({
         totalReps: getOneRepMax(ex.actualReps, ex.weight),
         date: ex.workout.date.split('T', 1)[0],
+        weight: ex.weight,
       })
     )
     progressList.sort((a, b) => (a.date > b.date ? 1 : -1))
@@ -96,11 +101,20 @@ const ProgressGraph = (props) => {
   const chart = (progObjectArray) => {
     const repList = []
     const dateList = []
+    let labelName = ''
 
     progObjectArray.map((ex) => {
       repList.push(ex.totalReps)
       dateList.push(ex.date)
     })
+
+    console.log(progObjectArray[0]?.weight)
+
+    if (progObjectArray[0]?.weight < 1) {
+      labelName = 'Reps'
+    } else {
+      labelName = 'One Rep Max'
+    }
 
     if (repList.length > 1) {
       setDisplayChart(true)
@@ -112,7 +126,7 @@ const ProgressGraph = (props) => {
       labels: dateList,
       datasets: [
         {
-          label: 'Sets Hit',
+          label: labelName,
           fill: false,
           data: repList,
           borderColor: 'rgba(60,179,113,0.6',
