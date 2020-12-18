@@ -1,0 +1,66 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+}
+
+datasource DS {
+  provider = "postgresql"
+  url = "***"
+}
+
+model Workout {
+  id                Int               @id
+  relationshipId    Int?
+  date              DateTime?
+  numberOfExercises Int?
+  UserRelationship  UserRelationship? @relation(fields: [relationshipId], references: [id])
+  exercises         Exercise[]
+}
+
+model Exercise {
+  id              Int            @id
+  workoutId       Int?
+  trainerComments String?
+  reps            Int?
+  actualReps      Int?
+  numberOfSets    Int?
+  actualSets      Int?
+  weight          Float?
+  actualWeight    Float?
+  traineeComments String?
+  exerciseTypeId  Int?           @unique
+  workout         Workout?       @relation(fields: [workoutId], references: [id])
+  ExerciseType    ExerciseType[]
+}
+
+model ExerciseType {
+  id                  Int      @id
+  exerciseDescription String?
+  exerciseName        String?
+  Exercise            Exercise @relation(fields: [id], references: [exerciseTypeId])
+}
+
+model AppUser {
+  id                  Int                @id
+  userName            String?
+  email               String?            @unique
+  createdOn           DateTime?          @default(now())
+  lastLogin           DateTime?
+  type                String?
+  userRelationship    UserRelationship[]
+  trainerRelationship UserRelationship?  @relation("trainer")
+  traineeRelationship UserRelationship?  @relation("trainee")
+}
+
+model UserRelationship {
+  trainerName String?
+  traineeName String?
+  id          Int       @id @default(autoincrement())
+  trainerId   Int?
+  traineeId   Int?
+  trainerUser AppUser?  @relation("trainer", fields: [trainerId], references: [id])
+  traineeUser AppUser?  @relation("trainee", fields: [traineeId], references: [id])
+  Workout     Workout[]
+  AppUser     AppUser?  @relation(fields: [appUserId], references: [id])
+  appUserId   Int?
+}

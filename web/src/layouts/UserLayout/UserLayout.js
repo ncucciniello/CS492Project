@@ -5,7 +5,6 @@ import logo from '../../../public/assets/logo.png'
 const UserLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
 
-  console.log(currentUser)
   return (
     <>
       <header className="home-header">
@@ -25,7 +24,6 @@ const UserLayout = ({ children }) => {
             )}
             <button onClick={logOut}>Log Out</button>
           </div>
-          {/* <div className="user-img"></div> */}
         </div>
       </header>
       <main>{children}</main>

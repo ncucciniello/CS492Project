@@ -1,0 +1,32 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "AppUser",
+      "field": "userRelationship"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AppUser",
+      "field": "trainerRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "AppUser",
+      "field": "traineeRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserRelationship",
+      "field": "AppUser"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserRelationship",
+      "field": "appUserId"
+    }
+  ]
+}

@@ -5,17 +5,10 @@ import { useState } from 'react'
 export const GET_PROGRESS = gql`
   query GetExerciseProgress($input: SearchProgressInput!) {
     exerciseProgress(input: $input) {
-      id
       weight
-      repsComplete
-      setsComplete
-      exerciseType {
-        id
-        name
-      }
+      actualReps
+      actualSets
       workout {
-        id
-        userId
         date
       }
     }
@@ -23,128 +16,119 @@ export const GET_PROGRESS = gql`
 `
 
 const ProgressGraph = (props) => {
+  const [chartData, setChartData] = useState({})
+  const [displayChart, setDisplayChart] = useState(false)
+
   const { data } = useQuery(GET_PROGRESS, {
     variables: {
       input: {
-        userId: props.userSelected,
+        traineeId: props.userSelected,
         exerciseTypeId: props.selectedExerciseId,
       },
     },
     onCompleted: () => {
-      chart()
+      chart(createProgressObjectList(data))
     },
   })
 
   const hasProgress = data?.exerciseProgress?.length || false
 
-  const [chartData, setChartData] = useState({})
-
-  const getAllDates = () => {
-    var xArray = []
-    data?.exerciseProgress.map((exercise) => {
-      xArray.push(exercise.workout.date.split('T', 1)[0])
-    })
-    return xArray
+  const getOneRepMax = (reps, weight) => {
+    if (reps == 1) {
+      return Math.round(weight * 1)
+    } else if (reps == 2) {
+      return Math.round(weight * 1.03)
+    } else if (reps == 3) {
+      return Math.round(weight * 1.06)
+    } else if (reps == 4) {
+      return Math.round(weight * 1.08)
+    } else if (reps == 5) {
+      return Math.round(weight * 1.11)
+    } else if (reps == 6) {
+      return Math.round(weight * 1.14)
+    } else if (reps == 7) {
+      return Math.round(weight * 1.17)
+    } else if (reps == 8) {
+      return Math.round(weight * 1.19)
+    } else if (reps == 9) {
+      return Math.round(weight * 1.22)
+    } else if (reps == 10) {
+      return Math.round(weight * 1.25)
+    } else if (reps == 11) {
+      return Math.round(weight * 1.27)
+    } else if (reps == 12) {
+      return Math.round(weight * 1.29)
+    } else if (reps == 13) {
+      return Math.round(weight * 1.3)
+    } else if (reps == 14) {
+      return Math.round(weight * 1.32)
+    } else if (reps == 15) {
+      return Math.round(weight * 1.33)
+    } else {
+      return weight * 1.5
+    }
   }
 
-  const getTotalReps = () => {
-    var yArray = []
-
-    data?.exerciseProgress.map(
-      (exercise) => {
-        if (exercise.repsComplete == 1) {
-          yArray.push(Math.round(exercise.weight * 1))
-        } else if (exercise.repsComplete == 2) {
-          yArray.push(Math.round(exercise.weight * 1.03))
-        } else if (exercise.repsComplete == 3) {
-          yArray.push(Math.round(exercise.weight * 1.06))
-        } else if (exercise.repsComplete == 4) {
-          yArray.push(Math.round(exercise.weight * 1.08))
-        } else if (exercise.repsComplete == 5) {
-          yArray.push(Math.round(exercise.weight * 1.11))
-        } else if (exercise.repsComplete == 6) {
-          yArray.push(Math.round(exercise.weight * 1.14))
-        } else if (exercise.repsComplete == 7) {
-          yArray.push(Math.round(exercise.weight * 1.17))
-        } else if (exercise.repsComplete == 8) {
-          yArray.push(Math.round(exercise.weight * 1.19))
-        } else if (exercise.repsComplete == 9) {
-          yArray.push(Math.round(exercise.weight * 1.22))
-        } else if (exercise.repsComplete == 10) {
-          yArray.push(Math.round(exercise.weight * 1.25))
-        } else if (exercise.repsComplete == 11) {
-          yArray.push(Math.round(exercise.weight * 1.27))
-        } else if (exercise.repsComplete == 12) {
-          yArray.push(Math.round(exercise.weight * 1.29))
-        } else if (exercise.repsComplete == 13) {
-          yArray.push(Math.round(exercise.weight * 1.3))
-        } else if (exercise.repsComplete == 14) {
-          yArray.push(Math.round(exercise.weight * 1.32))
-        } else if (exercise.repsComplete == 15) {
-          yArray.push(Math.round(exercise.weight * 1.33))
-        } else {
-          yArray.push(exercise.weight * 1.5)
-        }
-      }
-
-      // yArray.push(
-
-      //   // exercise.repsComplete * exercise.setsComplete * exercise.weight
-      //  )
-      //yArray.push(exercise.repsComplete * exerciseProgress.workou)
+  const createProgressObjectList = (data) => {
+    let progressList = []
+    data.exerciseProgress.map((ex) =>
+      progressList.push({
+        totalReps: getOneRepMax(ex.actualReps, ex.weight),
+        date: ex.workout.date.split('T', 1)[0],
+      })
     )
-    return yArray
+    progressList.sort((a, b) => (a.date > b.date ? 1 : -1))
+    return progressList
   }
 
-  console.log(getAllDates())
-  console.log(getTotalReps())
-  console.log(
-    'exerciseProgress',
-    data?.exerciseProgress.map((ex) => ex.weight)
-  )
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+  }
 
-  const chart = () => {
+  const chart = (progObjectArray) => {
+    const repList = []
+    const dateList = []
+
+    progObjectArray.map((ex) => {
+      repList.push(ex.totalReps)
+      dateList.push(ex.date)
+    })
+
+    if (repList.length > 1) {
+      setDisplayChart(true)
+    } else {
+      setDisplayChart(false)
+    }
+
     setChartData({
-      labels: getAllDates(),
-
+      labels: dateList,
       datasets: [
         {
-          label: 'Calculated 1 Rep Max',
-          data: getTotalReps(),
-          //added code
-          options: {
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                  },
-                },
-              ],
-            },
-          },
-
-          //finished code
-          //data: [5, 2, 0, 7, 5],
-          backgroundColor: 'rgba(60,179,113,0.6',
+          label: 'Sets Hit',
+          fill: false,
+          data: repList,
+          borderColor: 'rgba(60,179,113,0.6',
           borderWidth: 4,
         },
       ],
     })
   }
 
-  /* useEffect(() => {
-    chart()
-  }, [])
-  */
-
   const displayProgress = () => {
     if (props.loading) {
       return <p>Loading...</p>
     }
 
-    if (hasProgress) {
-      return <Line data={chartData} />
+    if (hasProgress && displayChart) {
+      return <Line data={chartData} options={options} />
     }
 
     return <p>There is no progress to display</p>

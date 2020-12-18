@@ -7,8 +7,8 @@ export const GET_CLIENTS = gql`
   query ClientListQuery($trainerId: Int!) {
     clients(trainerId: $trainerId) {
       id
-      name
-      email
+      traineeName
+      traineeId
     }
   }
 `
@@ -21,9 +21,12 @@ const ClientList = (props) => {
   }
 
   const { refetch, loading, empty, data } = useQuery(GET_CLIENTS, {
-    variables: { trainerId: props.currentUserId },
+    variables: { trainerId: props.currentTrainerId },
     onCompleted: (data) => {
-      props.setSelectedClient(data.clients[0].id)
+      if (data.clients.length > 0) {
+        props.setSelectedClient(data?.clients[0].traineeId)
+        props.setSelectedUserRelationship(data?.clients[0].id)
+      }
     },
   })
 
@@ -41,10 +44,12 @@ const ClientList = (props) => {
     if (hasData) {
       return data.clients.map((client) => (
         <ClientListItem
-          key={client.id}
-          user={client}
+          key={client.traineeId}
+          client={client}
           refreshClients={refetch}
           setSelectedClient={props.setSelectedClient}
+          setSelectedUserRelationship={props.setSelectedUserRelationship}
+          relationshipId={client.id}
         />
       ))
     }
@@ -63,9 +68,12 @@ const ClientList = (props) => {
       <button onClick={openTraineeList}>Add Client +</button>
       {isVisible && (
         <NewClient
-          currentClient={data}
+          currentClients={data?.clients}
           setVisibility={setVisibility}
           refreshClients={refetch}
+          currentClientslist={data}
+          currentTrainerId={props.currentTrainerId}
+          currentTrainerName={props.currentTrainerName}
         />
       )}
       <div className="clientList">{displayList()}</div>

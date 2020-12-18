@@ -1,0 +1,590 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "UpdateArgument",
+      "location": {
+        "tag": "Source",
+        "source": "DS"
+      },
+      "argument": "provider",
+      "newValue": "\"postgresql\""
+    },
+    {
+      "tag": "CreateModel",
+      "model": "AppUser"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "userName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "email",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "email"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "createdOn",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "createdOn"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "AppUser",
+          "field": "createdOn"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "now()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "lastLogin",
+      "type": "DateTime",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "type",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "AppUser",
+      "field": "UserRelationship",
+      "type": "UserRelationship",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "UserRelationship"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "trainerName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "traineeName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "trainerId",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "traineeId",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "AppUser",
+      "type": "AppUser",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[trainerId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserRelationship",
+          "field": "AppUser"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "UserRelationship",
+      "field": "Workout",
+      "type": "Workout",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteModel",
+      "model": "User"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "relationshipId",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "numberOfExercises",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "UserRelationship",
+      "type": "UserRelationship",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "UserRelationship"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "UserRelationship"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[relationshipId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "UserRelationship"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Workout",
+      "field": "Exercise",
+      "type": "Exercise",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Workout",
+      "field": "userId"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Workout",
+      "field": "user"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Workout",
+      "field": "exercises"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Workout",
+      "field": "date",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Workout",
+          "field": "date"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "trainerComments",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "reps",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "actualReps",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "numberOfSets",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "actualSets",
+      "type": "Int",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "actualWeight",
+      "type": "Float",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "traineeComments",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "Workout",
+      "type": "Workout",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "Workout"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "Workout"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[workoutId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "Workout"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Exercise",
+      "field": "ExerciseType",
+      "type": "ExerciseType",
+      "arity": "Optional"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "repsAssigned"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "repsComplete"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "setsAssigned"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "setsComplete"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "exerciseType"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Exercise",
+      "field": "workout"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Exercise",
+      "field": "workoutId",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Exercise",
+      "field": "weight",
+      "type": "Float",
+      "arity": "Optional"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Exercise",
+      "field": "exerciseTypeId",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Exercise",
+          "field": "exerciseTypeId"
+        },
+        "directive": "unique"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "ExerciseType",
+      "field": "exerciseDescription",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ExerciseType",
+      "field": "exerciseName",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "ExerciseType",
+      "field": "Exercise",
+      "type": "Exercise",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "ExerciseType",
+          "field": "Exercise"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ExerciseType",
+          "field": "Exercise"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "ExerciseType",
+          "field": "Exercise"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[exerciseTypeId]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "ExerciseType",
+      "field": "name"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "ExerciseType",
+      "field": "description"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "ExerciseType",
+      "field": "exercises"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "ExerciseType",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    }
+  ]
+}
