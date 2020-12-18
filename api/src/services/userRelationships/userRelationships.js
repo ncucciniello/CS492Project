@@ -5,7 +5,6 @@ export const userRelationships = () => {
 }
 
 export const clients = ({ trainerId }) => {
-  console.log(trainerId)
   return db.userRelationship.findMany({
     where: {
       trainerId: {
