@@ -1,5 +1,6 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
+import logo from '../../../public/assets/logo.png'
 
 const UserLayout = ({ children }) => {
   const { logOut, isAuthenticated, currentUser } = useAuth()
@@ -8,10 +9,10 @@ const UserLayout = ({ children }) => {
   return (
     <>
       <header className="home-header">
-        <div className="logo">Logo goes here</div>
-        <h1>
-          <Link to={routes.home()}>TrainerTracker</Link>
-        </h1>
+        {/* <div className="logo" >Logo goes here</div> */}
+        <Link to={routes.home()}>
+          <img src={logo} />
+        </Link>
         <div className="user-info">
           <div className="info-block">
             {isAuthenticated && (

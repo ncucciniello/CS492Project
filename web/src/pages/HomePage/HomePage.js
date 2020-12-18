@@ -1,5 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
+import 'src/index.css'
+// import { PlayButton } from 'react-player-controls'
 
 const HomePage = () => {
   const { logIn, logOut, hasRole, isAuthenticated } = useAuth()
@@ -39,33 +41,36 @@ const HomePage = () => {
           )}
         </div>
         <div className="info">
-          <p>APP INFO GOES HERE</p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Malesuada fames ac turpis egestas. Ut diam quam nulla porttitor
-            massa id neque. Sit amet mattis vulputate enim nulla aliquet. Congue
-            eu consequat ac felis donec et odio. Dictum at tempor commodo
-            ullamcorper a lacus vestibulum sed. Dui nunc mattis enim ut tellus.
-            Est ante in nibh mauris cursus. Massa enim nec dui nunc mattis enim.
-            Quisque sagittis purus sit amet volutpat consequat mauris nunc. Nam
-            at lectus urna duis. Posuere ac ut consequat semper viverra nam. Et
-            molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Dolor
-            morbi non arcu risus. Mattis pellentesque id nibh tortor id aliquet
-            lectus proin.
+            <center>Welcome to TrainerTracker!</center>
           </p>
           <p>
-            Interdum varius sit amet mattis. Aliquet enim tortor at auctor urna
-            nunc id cursus. A iaculis at erat pellentesque adipiscing commodo
-            elit at imperdiet. A arcu cursus vitae congue mauris rhoncus aenean.
-            Commodo odio aenean sed adipiscing. Aliquet enim tortor at auctor
-            urna nunc id. Dolor sed viverra ipsum nunc aliquet bibendum enim
-            facilisis gravida. Mauris ultrices eros in cursus turpis massa
-            tincidunt. In hendrerit gravida rutrum quisque non tellus. Sagittis
-            eu volutpat odio facilisis. Duis ut diam quam nulla. Arcu cursus
-            vitae congue mauris rhoncus aenean vel elit scelerisque. Diam quis
-            enim lobortis scelerisque. Tellus elementum sagittis vitae et leo
-            duis ut. Integer feugiat scelerisque varius morbi enim nunc.
+            Have you ever wondered if there was a better way to communicate with
+            your trainers, get workout plans, or even track progress in a better
+            fashion? Trainer Tracker is the answer! TrainerTracker is an
+            application that connects trainees and trainers through a powerful
+            user interface that does many things:
+          </p>
+          <p>
+            1. Trainers can assign trainees a workout plan including the
+            weights, repetitions, and sets.
+          </p>
+          <br />
+          <p>
+            2. Trainees can view the workouts assigned and log the workouts that
+            they crush!
+          </p>
+          <br />
+          <p>
+            3. Trainers and Trainees can view progress that the trainee is
+            making through powerful graphs to gain powerful intel.
+          </p>
+          <br />
+          <p>
+            4. Based on these graphs the trainers and trainees have a better
+            understanding of whether or not their trainee is successful or not
+            enabling them to lower the weight or push their trainee to the next
+            level!
           </p>
         </div>
       </main>

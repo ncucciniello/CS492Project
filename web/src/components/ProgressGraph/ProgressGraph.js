@@ -41,9 +41,9 @@ const ProgressGraph = (props) => {
 
   const getAllDates = () => {
     var xArray = []
-    data?.exerciseProgress.map((exercise) =>
+    data?.exerciseProgress.map((exercise) => {
       xArray.push(exercise.workout.date.split('T', 1)[0])
-    )
+    })
     return xArray
   }
 
@@ -51,10 +51,46 @@ const ProgressGraph = (props) => {
     var yArray = []
 
     data?.exerciseProgress.map(
-      (exercise) =>
-        yArray.push(
-          exercise.repsComplete * exercise.setsComplete * exercise.weight
-        )
+      (exercise) => {
+        if (exercise.repsComplete == 1) {
+          yArray.push(Math.round(exercise.weight * 1))
+        } else if (exercise.repsComplete == 2) {
+          yArray.push(Math.round(exercise.weight * 1.03))
+        } else if (exercise.repsComplete == 3) {
+          yArray.push(Math.round(exercise.weight * 1.06))
+        } else if (exercise.repsComplete == 4) {
+          yArray.push(Math.round(exercise.weight * 1.08))
+        } else if (exercise.repsComplete == 5) {
+          yArray.push(Math.round(exercise.weight * 1.11))
+        } else if (exercise.repsComplete == 6) {
+          yArray.push(Math.round(exercise.weight * 1.14))
+        } else if (exercise.repsComplete == 7) {
+          yArray.push(Math.round(exercise.weight * 1.17))
+        } else if (exercise.repsComplete == 8) {
+          yArray.push(Math.round(exercise.weight * 1.19))
+        } else if (exercise.repsComplete == 9) {
+          yArray.push(Math.round(exercise.weight * 1.22))
+        } else if (exercise.repsComplete == 10) {
+          yArray.push(Math.round(exercise.weight * 1.25))
+        } else if (exercise.repsComplete == 11) {
+          yArray.push(Math.round(exercise.weight * 1.27))
+        } else if (exercise.repsComplete == 12) {
+          yArray.push(Math.round(exercise.weight * 1.29))
+        } else if (exercise.repsComplete == 13) {
+          yArray.push(Math.round(exercise.weight * 1.3))
+        } else if (exercise.repsComplete == 14) {
+          yArray.push(Math.round(exercise.weight * 1.32))
+        } else if (exercise.repsComplete == 15) {
+          yArray.push(Math.round(exercise.weight * 1.33))
+        } else {
+          yArray.push(exercise.weight * 1.5)
+        }
+      }
+
+      // yArray.push(
+
+      //   // exercise.repsComplete * exercise.setsComplete * exercise.weight
+      //  )
       //yArray.push(exercise.repsComplete * exerciseProgress.workou)
     )
     return yArray
@@ -73,7 +109,7 @@ const ProgressGraph = (props) => {
 
       datasets: [
         {
-          label: 'Sets Hit',
+          label: 'Calculated 1 Rep Max',
           data: getTotalReps(),
           //added code
           options: {
