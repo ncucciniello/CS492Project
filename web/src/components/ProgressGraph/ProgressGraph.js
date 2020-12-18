@@ -5,6 +5,7 @@ import { useState } from 'react'
 export const GET_PROGRESS = gql`
   query GetExerciseProgress($input: SearchProgressInput!) {
     exerciseProgress(input: $input) {
+      weight
       actualReps
       actualSets
       workout {
@@ -32,11 +33,47 @@ const ProgressGraph = (props) => {
 
   const hasProgress = data?.exerciseProgress?.length || false
 
+  const getOneRepMax = (reps, weight) => {
+    if (reps == 1) {
+      return Math.round(weight * 1)
+    } else if (reps == 2) {
+      return Math.round(weight * 1.03)
+    } else if (reps == 3) {
+      return Math.round(weight * 1.06)
+    } else if (reps == 4) {
+      return Math.round(weight * 1.08)
+    } else if (reps == 5) {
+      return Math.round(weight * 1.11)
+    } else if (reps == 6) {
+      return Math.round(weight * 1.14)
+    } else if (reps == 7) {
+      return Math.round(weight * 1.17)
+    } else if (reps == 8) {
+      return Math.round(weight * 1.19)
+    } else if (reps == 9) {
+      return Math.round(weight * 1.22)
+    } else if (reps == 10) {
+      return Math.round(weight * 1.25)
+    } else if (reps == 11) {
+      return Math.round(weight * 1.27)
+    } else if (reps == 12) {
+      return Math.round(weight * 1.29)
+    } else if (reps == 13) {
+      return Math.round(weight * 1.3)
+    } else if (reps == 14) {
+      return Math.round(weight * 1.32)
+    } else if (reps == 15) {
+      return Math.round(weight * 1.33)
+    } else {
+      return weight * 1.5
+    }
+  }
+
   const createProgressObjectList = (data) => {
     let progressList = []
     data.exerciseProgress.map((ex) =>
       progressList.push({
-        totalReps: ex.actualReps * ex.actualSets,
+        totalReps: getOneRepMax(ex.actualReps, ex.weight),
         date: ex.workout.date.split('T', 1)[0],
       })
     )
