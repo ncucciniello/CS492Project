@@ -53,11 +53,20 @@
 }
 
 .info {
-  padding: 80px 20vw;
+  max-width: 600px;
+  margin: 60px auto;
 }
 
 .info p {
   margin: 15px 0;
+}
+
+.info ol {
+  padding-right: 60px;
+}
+
+.info li {
+  margin: 10px 0;
 }
 
 .clientListHeader {

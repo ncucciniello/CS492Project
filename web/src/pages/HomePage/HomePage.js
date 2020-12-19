@@ -68,7 +68,6 @@ const HomePage = () => {
 
   const redirectUser = () => {
     const currentUserType = data.userExists[0].type
-    console.log('sending from redirectUser()', data.userExists[0].type)
 
     currentUserType == 'Trainer'
       ? navigate(routes.trainer())
@@ -83,7 +82,6 @@ const HomePage = () => {
         console.log('users is not in db yet')
         setDisplayPopUp(true)
       } else {
-        console.log(data.userExists[0])
         redirectUser()
       }
     },
@@ -133,36 +131,32 @@ const HomePage = () => {
         </div>
         <div className="info">
           <p>
-            <center>Welcome to TrainerTracker!</center>
-          </p>
-          <p>
             Have you ever wondered if there was a better way to communicate with
             your trainers, get workout plans, or even track progress in a better
             fashion? Trainer Tracker is the answer! TrainerTracker is an
             application that connects trainees and trainers through a powerful
             user interface that does many things:
           </p>
-          <p>
-            1. Trainers can assign trainees a workout plan including the
-            weights, repetitions, and sets.
-          </p>
-          <br />
-          <p>
-            2. Trainees can view the workouts assigned and log the workouts that
-            they crush!
-          </p>
-          <br />
-          <p>
-            3. Trainers and Trainees can view progress that the trainee is
-            making through powerful graphs to gain powerful intel.
-          </p>
-          <br />
-          <p>
-            4. Based on these graphs the trainers and trainees have a better
-            understanding of whether or not their trainee is successful or not
-            enabling them to lower the weight or push their trainee to the next
-            level!
-          </p>
+          <ol>
+            <li>
+              Trainers can assign trainees a workout plan including the weights,
+              repetitions, and sets.
+            </li>
+            <li>
+              Trainees can view the workouts assigned and log the workouts that
+              they crush!
+            </li>
+            <li>
+              Trainers and Trainees can view progress that the trainee is making
+              through powerful graphs to gain powerful intel.
+            </li>
+            <li>
+              Based on these graphs the trainers and trainees have a better
+              understanding of whether or not their trainee is successful or not
+              enabling them to lower the weight or push their trainee to the
+              next level!
+            </li>
+          </ol>
         </div>
       </main>
       <footer>

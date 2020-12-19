@@ -65,7 +65,7 @@ const WorkoutGraph = (props) => {
 
   useEffect(() => {
     chart()
-  }, [])
+  }, [props])
 
   return (
     <div className="workoutGraph">

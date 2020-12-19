@@ -75,13 +75,15 @@ const ProgressGraph = (props) => {
 
   const createProgressObjectList = (data) => {
     let progressList = []
-    data.exerciseProgress.map((ex) =>
-      progressList.push({
-        totalReps: getOneRepMax(ex.actualReps, ex.weight),
-        date: ex.workout.date.split('T', 1)[0],
-        weight: ex.weight,
-      })
-    )
+    data.exerciseProgress.map((ex) => {
+      if (ex.actualReps >= 1) {
+        progressList.push({
+          totalReps: getOneRepMax(ex.actualReps, ex.weight),
+          date: ex.workout.date.split('T', 1)[0],
+          weight: ex.weight,
+        })
+      }
+    })
     progressList.sort((a, b) => (a.date > b.date ? 1 : -1))
     return progressList
   }
@@ -107,8 +109,6 @@ const ProgressGraph = (props) => {
       repList.push(ex.totalReps)
       dateList.push(ex.date)
     })
-
-    console.log(progObjectArray[0]?.weight)
 
     if (progObjectArray[0]?.weight < 1) {
       labelName = 'Reps'
