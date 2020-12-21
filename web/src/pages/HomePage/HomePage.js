@@ -2,6 +2,7 @@ import { Link, routes, navigate } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
 import { useQuery, useMutation } from '@redwoodjs/web'
 import { useState } from 'react'
+import logo from '../../../public/assets/logo.png'
 import 'src/index.css'
 
 export const FIND_USER = gql`
@@ -90,10 +91,7 @@ const HomePage = () => {
   return (
     <>
       <header className="home-header">
-        <div className="logo">Logo goes here</div>
-        <h1>
-          <Link to={routes.home()}>TrainerTracker</Link>
-        </h1>
+        <img src={logo} />
       </header>
       <main>
         {isAuthenticated ? (

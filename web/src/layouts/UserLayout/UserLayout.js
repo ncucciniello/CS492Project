@@ -8,7 +8,6 @@ const UserLayout = ({ children }) => {
   return (
     <>
       <header className="home-header">
-        {/* <div className="logo" >Logo goes here</div> */}
         <Link to={routes.home()}>
           <img src={logo} />
         </Link>

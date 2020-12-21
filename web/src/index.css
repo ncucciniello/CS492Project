@@ -111,10 +111,13 @@
 .workoutGraph {
   width: 74%;
   min-height: 250px;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   display: inline-block;
   /* overflow-y: scroll; */
   /* margin: 50px auto; */
+}
+.workoutGraph h2 {
+  text-align: center;
 }
 
 .workoutSidebar {
@@ -164,14 +167,14 @@
 .exerciseProgressContatiner {
   width: 600px;
   min-height: 300px;
-  border: 2px solid black;
+  border: 1.5px solid black;
   margin: 50px auto;
 }
 
 .exerciseProgressGraph {
   width: 100%;
   min-height: 250px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: inline-block;
   /* margin: 50px auto; */
 }

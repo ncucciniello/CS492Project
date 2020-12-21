@@ -69,7 +69,7 @@ const WorkoutGraph = (props) => {
 
   return (
     <div className="workoutGraph">
-      <h1>Workout Progress</h1>
+      <h2>Workout Progress</h2>
       <div>
         <Bar data={chartData} options={options} />
       </div>

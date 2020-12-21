@@ -46,7 +46,7 @@ const Progress = (props) => {
     <div className="exerciseProgressContatiner ">
       <div className="exerciseProgressHeader">
         <Form formMethods={formMethods}>
-          <h4 className="progressLabel">Viewing Progress for:</h4>
+          <h4 className="progressLabel">Viewing all time progress for:</h4>
           <SelectField onChange={handleChange} name="exerciseTypeId">
             {displayExerciseOptions()}
           </SelectField>
