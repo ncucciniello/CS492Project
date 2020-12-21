@@ -41,6 +41,7 @@ const TrainerPage = () => {
       <ClientList
         currentTrainerId={currentTrainerId}
         currentTrainerName={currentTrainerName}
+        selectedClient={selectedClient}
         setSelectedClient={setSelectedClient}
         setSelectedUserRelationship={setSelectedUserRelationship}
       />

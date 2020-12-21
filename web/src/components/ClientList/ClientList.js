@@ -47,6 +47,7 @@ const ClientList = (props) => {
           key={client.traineeId}
           client={client}
           refreshClients={refetch}
+          selectedClient={props.selectedClient}
           setSelectedClient={props.setSelectedClient}
           setSelectedUserRelationship={props.setSelectedUserRelationship}
           relationshipId={client.id}

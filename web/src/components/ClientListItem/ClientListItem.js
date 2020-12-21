@@ -16,18 +16,24 @@ const ClientListItem = (props) => {
     props.refreshClients()
   }
 
+  const handleClick = () => {
+    if (props.selectedClient != props.client.traineeId) {
+      props.setSelectedClient(props.client.traineeId)
+      props.setSelectedUserRelationship(props.client.id)
+    }
+  }
+
   return (
-    <div className="clientListItem">
+    <div
+      className={`clientListItem ${
+        props.selectedClient == props.client.traineeId ? 'selected' : ''
+      }`}
+      onClick={() => handleClick()}
+    >
       <h2>{props.client.traineeName}</h2>
-      <button
-        onClick={() => {
-          props.setSelectedClient(props.client.traineeId)
-          props.setSelectedUserRelationship(props.client.id)
-        }}
-      >
-        Select
+      <button onClick={() => onDelete(props.relationshipId)}>
+        Remove Client
       </button>
-      <button onClick={() => onDelete(props.relationshipId)}>Remove</button>
     </div>
   )
 }
