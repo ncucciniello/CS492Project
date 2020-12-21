@@ -2,14 +2,6 @@
   border-bottom: 2px solid black;
 }
 
-.home-header .logo {
-  margin: 5px 0 0 5px;
-  height: 50px;
-  width: 50px ;
-  display: inline-block;
-  background-color: green;
-}
-
 .home-header h1, a {
   margin-left: 5px;
   text-decoration: none;
@@ -23,19 +15,11 @@
 
 .info-block {
   width: 100%;
-  display: inline-block;
 }
 
 .user-info p {
   display: block;
   margin: 0 0 10px 0;
-}
-
-.user-info .user-img {
-  background-color: pink;
-  height: 60px;
-  width: 50%;
-  display: inline-block;
 }
 
 .banner {
@@ -83,7 +67,6 @@
 }
 
 .clientListItem {
-  /* width: 100%; */
   border-bottom: 1px solid black;
   margin: 0 auto;
 }
@@ -97,11 +80,8 @@
 
 .workoutHeader {
   width: 74%;
-  /* height: 200px; */
-  /* border: 2px solid purple; */
   display: inline-block;
   text-align: center;
-  /* margin: 50px auto; */
 }
 
 .workoutHeader button, h3 {
@@ -111,10 +91,8 @@
 .workoutGraph {
   width: 74%;
   min-height: 250px;
-  /* border: 2px solid black; */
   display: inline-block;
-  /* overflow-y: scroll; */
-  /* margin: 50px auto; */
+  text-align: center;
 }
 .workoutGraph h2 {
   text-align: center;
@@ -123,9 +101,7 @@
 .workoutSidebar {
   width: 24%;
   height: 100%;
-  /* border: 2px solid green; */
   float: right;
-  /* margin: 50px auto; */
 }
 
 .newWorkoutModal {
@@ -155,7 +131,6 @@
 
 .workoutInput {
   width: 100px;
-  /* padding: 0; */
   text-align: right;
 }
 
@@ -174,9 +149,8 @@
 .exerciseProgressGraph {
   width: 100%;
   min-height: 250px;
-  /* border: 1px solid black; */
   display: inline-block;
-  /* margin: 50px auto; */
+  text-align: center;
 }
 
 .progressLabel {
