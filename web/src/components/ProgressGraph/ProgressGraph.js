@@ -33,9 +33,9 @@ const ProgressGraph = (props) => {
 
   const hasProgress = data?.exerciseProgress?.length || false
 
-  const getOneRepMax = (reps, weight) => {
+  const getOneRepMax = (reps, sets, weight) => {
     if (weight == 0) {
-      return reps
+      return reps * sets
     }
 
     if (reps == 1) {
@@ -78,7 +78,7 @@ const ProgressGraph = (props) => {
     data.exerciseProgress.map((ex) => {
       if (ex.actualReps >= 1) {
         progressList.push({
-          totalReps: getOneRepMax(ex.actualReps, ex.weight),
+          totalReps: getOneRepMax(ex.actualReps, ex.actualSets, ex.weight),
           date: ex.workout.date.split('T', 1)[0],
           weight: ex.weight,
         })
@@ -111,7 +111,7 @@ const ProgressGraph = (props) => {
     })
 
     if (progObjectArray[0]?.weight < 1) {
-      labelName = 'Reps'
+      labelName = 'Total Reps'
     } else {
       labelName = 'One Rep Max'
     }
