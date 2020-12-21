@@ -72,12 +72,6 @@ button:hover, select:hover {
 .clientListItem {
   padding: 20px;
   border-bottom: 1px solid black;
-  cursor: pointer;
-}
-
-.clientListItem:hover {
-  outline: 4px solid lightgray;
-  outline-offset: -5px;
 }
 
 .clientListItem h2 {
@@ -85,6 +79,7 @@ button:hover, select:hover {
 }
 
 .clientListItem button {
+  margin: 0 5px;
   float: right;
 }
 

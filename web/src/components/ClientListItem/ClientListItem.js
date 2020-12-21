@@ -16,7 +16,7 @@ const ClientListItem = (props) => {
     props.refreshClients()
   }
 
-  const handleClick = () => {
+  const selectClient = () => {
     if (props.selectedClient != props.client.traineeId) {
       props.setSelectedClient(props.client.traineeId)
       props.setSelectedUserRelationship(props.client.id)
@@ -28,11 +28,14 @@ const ClientListItem = (props) => {
       className={`clientListItem ${
         props.selectedClient == props.client.traineeId ? 'selected' : ''
       }`}
-      onClick={() => handleClick()}
     >
       <h2>{props.client.traineeName}</h2>
-      <button onClick={() => onDelete(props.relationshipId)}>
-        Remove Client
+      <button onClick={() => onDelete(props.relationshipId)}>Remove</button>
+      <button
+        onClick={() => selectClient()}
+        disabled={props.selectedClient == props.client.traineeId}
+      >
+        Select
       </button>
     </div>
   )
