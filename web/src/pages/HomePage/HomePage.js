@@ -126,6 +126,13 @@ const HomePage = () => {
             <button onClick={logIn}>Sign up / Log in</button>
           )}
           {displayPopUp && popUp()}
+          <div className="login-info">
+            <p>Please feel free to use sample account login info below:</p>
+            <p>&emsp;<strong>Trainer Account:</strong></p>
+            <p>&emsp;&ensp;<strong>Email:</strong> ncucciniello@gmail.com | <strong>Password:</strong> Test1234</p>
+            <p>&emsp;<strong>Trainee Account:</strong></p>
+            <p>&emsp;&ensp;<strong>Email:</strong> s1293334@monmouth.edu | <strong>Password:</strong> Test1234</p>
+          </div>
         </div>
         <div className="info">
           <p>

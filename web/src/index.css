@@ -40,6 +40,12 @@ button:hover, select:hover {
   margin: 20px 0;
 }
 
+.login-info {
+  text-align: left;
+  max-width: 600px;
+  margin: 60px auto;
+}
+
 .info {
   max-width: 600px;
   margin: 60px auto;
